@@ -9,7 +9,7 @@ namespace CV_Ultra
 
         private void button1_Click(object sender, EventArgs e)
         {
-            button1.Enabled = !true;
+            button1.Enabled = false;
         }
     }
 }
