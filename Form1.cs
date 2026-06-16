@@ -102,6 +102,56 @@ namespace CV_Ultra
             return res;
         }
 
+        private Bitmap BlurImage(Bitmap src, int kernelSize)
+        {
+            int w = src.Width;
+            int h = src.Height;
+            Bitmap res = new Bitmap(w, h);
+
+            // Радиус окошка — это то, на сколько пикселей мы отходим от центра влево/вправо/вверх/вниз
+            int rad = kernelSize / 2;
+
+            // Бежим по всей картинке
+            for (int x = 0; x < w; x++)
+            {
+                for (int y = 0; y < h; y++)
+                {
+                    int sumR = 0, sumG = 0, sumB = 0;
+                    int count = 0;
+
+                    // Бежим внутри окошка фильтра (ядра) вокруг текущего пикселя (x, y)
+                    for (int kx = -rad; kx <= rad; kx++)
+                    {
+                        for (int ky = -rad; ky <= rad; ky++)
+                        {
+                            int px = x + kx;
+                            int py = y + ky;
+
+                            // Защита от выхода за границы картинки (чтобы на краях код не падал)
+                            if (px >= 0 && px < w && py >= 0 && py < h)
+                            {
+                                Color pixelColor = src.GetPixel(px, py);
+                                sumR += pixelColor.R;
+                                sumG += pixelColor.G;
+                                sumB += pixelColor.B;
+                                count++; // Считаем, сколько реально пикселей попало в обработку
+                            }
+                        }
+                    }
+
+                    // Считаем среднее арифметическое для каждого канала
+                    int avgR = sumR / count;
+                    int avgG = sumG / count;
+                    int avgB = sumB / count;
+
+                    // Записываем размытый пиксель в результирующую картинку
+                    res.SetPixel(x, y, Color.FromArgb(avgR, avgG, avgB));
+                }
+            }
+
+            return res;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
