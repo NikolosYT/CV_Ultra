@@ -93,9 +93,69 @@ namespace CV_Ultra.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap кнопкасветкрасиво {
+            get {
+                object obj = ResourceManager.GetObject("кнопкасветкрасиво", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap лунасвет {
+            get {
+                object obj = ResourceManager.GetObject("лунасвет", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap основа_темной_темы_с_кнопками_вывода_и_загрузки {
             get {
                 object obj = ResourceManager.GetObject("основа темной темы с кнопками вывода и загрузки", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap светбольшая {
+            get {
+                object obj = ResourceManager.GetObject("светбольшая", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap светлая {
+            get {
+                object obj = ResourceManager.GetObject("светлая", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap солнцесвет {
+            get {
+                object obj = ResourceManager.GetObject("солнцесвет", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap черниии {
+            get {
+                object obj = ResourceManager.GetObject("черниии", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

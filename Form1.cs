@@ -163,8 +163,34 @@ namespace CV_Ultra
 
         private void button3_Click(object sender, EventArgs e)
         {
-            //this.BackgroundImage = Properties.Resources.основа_светлой_темы_с_кнопками;
+            this.BackgroundImage = Properties.Resources.светлая;
+            button1.BackgroundImage = Properties.Resources.кнопкасветкрасиво;
+            button2.BackgroundImage = Properties.Resources.лунасвет;
+            button3.BackgroundImage = Properties.Resources.солнцесвет;
+            button4.BackgroundImage = Properties.Resources.кнопкасветкрасиво;
+            button5.BackgroundImage = Properties.Resources.светбольшая;
+            button6.BackgroundImage = Properties.Resources.светбольшая;
+            button7.BackgroundImage = Properties.Resources.светбольшая;
+            button8.BackgroundImage = Properties.Resources.светбольшая;
+            button9.BackgroundImage = Properties.Resources.светбольшая;
+            button10.BackgroundImage = Properties.Resources.светбольшая;
+            button11.BackgroundImage = Properties.Resources.светбольшая;
+        }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.BackgroundImage = Properties.Resources.основа_темной_темы_с_кнопками_вывода_и_загрузки;
+            button1.BackgroundImage = Properties.Resources.черное;
+            button2.BackgroundImage = Properties.Resources.черниии;
+            button3.BackgroundImage = Properties.Resources.кнопка_светли;
+            button4.BackgroundImage = Properties.Resources.черное;
+            button5.BackgroundImage = Properties.Resources.черное2;
+            button6.BackgroundImage = Properties.Resources.черное2;
+            button7.BackgroundImage = Properties.Resources.черное2;
+            button8.BackgroundImage = Properties.Resources.черное2;
+            button9.BackgroundImage = Properties.Resources.черное2;
+            button10.BackgroundImage = Properties.Resources.черное2;
+            button11.BackgroundImage = Properties.Resources.черное2;
         }
     }
 }
