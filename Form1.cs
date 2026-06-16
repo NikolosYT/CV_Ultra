@@ -154,7 +154,17 @@ namespace CV_Ultra
 
         private void button1_Click(object sender, EventArgs e)
         {
-            button1.Enabled = false;
+            pictureBox1.BackgroundImage = ConvertToGrayscale(new Bitmap(pictureBox1.BackgroundImage));
+            for (int i = 0; i < 10; i++)
+            {
+                pictureBox1.BackgroundImage = BlurImage(new Bitmap(pictureBox1.BackgroundImage), 5);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            //this.BackgroundImage = Properties.Resources.основа_светлой_темы_с_кнопками;
+
         }
     }
 }
