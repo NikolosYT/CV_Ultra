@@ -120,7 +120,7 @@ namespace CV_Ultra
             {
                 for (int y = 0; y < h; y++)
                 {
-                    int sumR = 0, sumG = 0, sumB = 0;
+                    int sumGray = 0;
                     int count = 0;
 
                     // Бежим внутри окошка фильтра (ядра) вокруг текущего пикселя (x, y)
@@ -134,28 +134,90 @@ namespace CV_Ultra
                             // Защита от выхода за границы картинки (чтобы на краях код не падал)
                             if (px >= 0 && px < w && py >= 0 && py < h)
                             {
-                                Color pixelColor = src.GetPixel(px, py);
-                                sumR += pixelColor.R;
-                                sumG += pixelColor.G;
-                                sumB += pixelColor.B;
+                                // Картинка уже серая, поэтому R, G и B равны. Берём только R
+                                sumGray += src.GetPixel(px, py).R;
                                 count++; // Считаем, сколько реально пикселей попало в обработку
                             }
                         }
                     }
 
-                    // Считаем среднее арифметическое для каждого канала
-                    int avgR = sumR / count;
-                    int avgG = sumG / count;
-                    int avgB = sumB / count;
+                    // Считаем среднее арифметическое для серого канала
+                    int avgGray = sumGray / count;
 
-                    // Записываем размытый пиксель в результирующую картинку
-                    res.SetPixel(x, y, Color.FromArgb(avgR, avgG, avgB));
+                    // Записываем размытый пиксель, дублируя серый цвет во все три канала
+                    res.SetPixel(x, y, Color.FromArgb(avgGray, avgGray, avgGray));
                 }
             }
 
             return res;
         }
 
+        // Гаусов блюр
+        public Bitmap ApplyGaussianBlurToGrayscale(Bitmap sourceBitmap, int radius, double sigma)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+            Bitmap resultBitmap = new Bitmap(width, height);
+
+            // 1. Создаем ядро Гаусса
+            int kernelSize = radius * 2 + 1;
+            double[,] kernel = new double[kernelSize, kernelSize];
+            double kernelSum = 0;
+
+            for (int y = -radius; y <= radius; y++)
+            {
+                for (int x = -radius; x <= radius; x++)
+                {
+                    double exponent = -(x * x + y * y) / (2 * sigma * sigma);
+                    double weight = (1.0 / (2 * Math.PI * sigma * sigma)) * Math.Exp(exponent);
+
+                    kernel[y + radius, x + radius] = weight;
+                    kernelSum += weight;
+                }
+            }
+
+            // Нормализация ядра
+            for (int y = 0; y < kernelSize; y++)
+            {
+                for (int x = 0; x < kernelSize; x++)
+                {
+                    kernel[y, x] /= kernelSum;
+                }
+            }
+
+            // 2. Применяем ядро (считаем только один канал)
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    double graySum = 0;
+
+                    for (int ky = -radius; ky <= radius; ky++)
+                    {
+                        for (int kx = -radius; kx <= radius; kx++)
+                        {
+                            // Обработка краев изображения (отзеркаливание)
+                            int pixelX = Math.Min(Math.Max(x + kx, 0), width - 1);
+                            int pixelY = Math.Min(Math.Max(y + ky, 0), height - 1);
+
+                            // Так как картинка серая, R, G и B одинаковы. Берем только .R
+                            int grayValue = sourceBitmap.GetPixel(pixelX, pixelY).R;
+                            double weight = kernel[ky + radius, kx + radius];
+
+                            graySum += grayValue * weight;
+                        }
+                    }
+
+                    // Ограничиваем значение от 0 до 255
+                    int finalGray = (int)Math.Min(Math.Max(graySum, 0), 255);
+
+                    // Записываем одно и то же значение во все три канала R, G, B
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(finalGray, finalGray, finalGray));
+                }
+            }
+
+            return resultBitmap;
+        }
 
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
