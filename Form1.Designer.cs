@@ -42,32 +42,32 @@
             button10 = new Button();
             button11 = new Button();
             panel1 = new Panel();
+            button14 = new Button();
             button12 = new Button();
             button13 = new Button();
-            button14 = new Button();
             panel2 = new Panel();
-            button15 = new Button();
-            button16 = new Button();
-            button17 = new Button();
-            button18 = new Button();
             button19 = new Button();
             button20 = new Button();
             button21 = new Button();
             button22 = new Button();
+            button17 = new Button();
+            button18 = new Button();
+            button16 = new Button();
+            button15 = new Button();
             panel3 = new Panel();
-            button23 = new Button();
             button24 = new Button();
+            button23 = new Button();
             panel4 = new Panel();
-            button25 = new Button();
-            button26 = new Button();
-            button27 = new Button();
             button28 = new Button();
+            button27 = new Button();
+            button26 = new Button();
+            button25 = new Button();
             panel5 = new Panel();
-            button29 = new Button();
-            button30 = new Button();
-            button31 = new Button();
-            button32 = new Button();
             button33 = new Button();
+            button32 = new Button();
+            button31 = new Button();
+            button30 = new Button();
+            button29 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -163,6 +163,7 @@
             button5.TabIndex = 5;
             button5.Text = "Преобразование изображения";
             button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
             // 
             // button6
             // 
@@ -179,6 +180,7 @@
             button6.TabIndex = 6;
             button6.Text = "Блюр";
             button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
             // 
             // button7
             // 
@@ -195,6 +197,7 @@
             button7.TabIndex = 7;
             button7.Text = "Шум";
             button7.UseVisualStyleBackColor = true;
+            button7.Click += button7_Click;
             // 
             // button8
             // 
@@ -211,6 +214,7 @@
             button8.TabIndex = 8;
             button8.Text = "PSNR и SSIM";
             button8.UseVisualStyleBackColor = true;
+            button8.Click += button8_Click;
             // 
             // button9
             // 
@@ -227,6 +231,7 @@
             button9.TabIndex = 9;
             button9.Text = "Смаз";
             button9.UseVisualStyleBackColor = true;
+            button9.Click += button9_Click;
             // 
             // button10
             // 
@@ -243,6 +248,7 @@
             button10.TabIndex = 10;
             button10.Text = "Выделение контуров";
             button10.UseVisualStyleBackColor = true;
+            button10.Click += button10_Click;
             // 
             // button11
             // 
@@ -259,6 +265,7 @@
             button11.TabIndex = 11;
             button11.Text = "Сегментация";
             button11.UseVisualStyleBackColor = true;
+            button11.Click += button11_Click;
             // 
             // panel1
             // 
@@ -267,10 +274,26 @@
             panel1.Controls.Add(button14);
             panel1.Controls.Add(button12);
             panel1.Controls.Add(button13);
-            panel1.Location = new Point(172, 71);
+            panel1.Location = new Point(329, 80);
             panel1.Name = "panel1";
             panel1.Size = new Size(377, 229);
             panel1.TabIndex = 12;
+            // 
+            // button14
+            // 
+            button14.BackgroundImage = (Image)resources.GetObject("button14.BackgroundImage");
+            button14.BackgroundImageLayout = ImageLayout.Stretch;
+            button14.Cursor = Cursors.Hand;
+            button14.FlatAppearance.BorderSize = 0;
+            button14.FlatStyle = FlatStyle.Flat;
+            button14.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button14.ForeColor = Color.PaleVioletRed;
+            button14.Location = new Point(20, 147);
+            button14.Name = "button14";
+            button14.Size = new Size(328, 53);
+            button14.TabIndex = 15;
+            button14.Text = "Повышение резкости";
+            button14.UseVisualStyleBackColor = true;
             // 
             // button12
             // 
@@ -304,22 +327,6 @@
             button13.Text = "М. Б. Эквализация";
             button13.UseVisualStyleBackColor = true;
             // 
-            // button14
-            // 
-            button14.BackgroundImage = (Image)resources.GetObject("button14.BackgroundImage");
-            button14.BackgroundImageLayout = ImageLayout.Stretch;
-            button14.Cursor = Cursors.Hand;
-            button14.FlatAppearance.BorderSize = 0;
-            button14.FlatStyle = FlatStyle.Flat;
-            button14.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            button14.ForeColor = Color.PaleVioletRed;
-            button14.Location = new Point(20, 147);
-            button14.Name = "button14";
-            button14.Size = new Size(328, 53);
-            button14.TabIndex = 15;
-            button14.Text = "Повышение резкости";
-            button14.UseVisualStyleBackColor = true;
-            // 
             // panel2
             // 
             panel2.BackgroundImage = Properties.Resources.пустоеокно;
@@ -332,74 +339,10 @@
             panel2.Controls.Add(button18);
             panel2.Controls.Add(button16);
             panel2.Controls.Add(button15);
-            panel2.Location = new Point(164, 71);
+            panel2.Location = new Point(344, 71);
             panel2.Name = "panel2";
             panel2.Size = new Size(377, 543);
             panel2.TabIndex = 13;
-            // 
-            // button15
-            // 
-            button15.BackgroundImage = (Image)resources.GetObject("button15.BackgroundImage");
-            button15.BackgroundImageLayout = ImageLayout.Stretch;
-            button15.Cursor = Cursors.Hand;
-            button15.FlatAppearance.BorderSize = 0;
-            button15.FlatStyle = FlatStyle.Flat;
-            button15.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            button15.ForeColor = Color.PaleVioletRed;
-            button15.Location = new Point(19, 40);
-            button15.Name = "button15";
-            button15.Size = new Size(328, 53);
-            button15.TabIndex = 16;
-            button15.Text = "Обычный блюз";
-            button15.UseVisualStyleBackColor = true;
-            // 
-            // button16
-            // 
-            button16.BackgroundImage = (Image)resources.GetObject("button16.BackgroundImage");
-            button16.BackgroundImageLayout = ImageLayout.Stretch;
-            button16.Cursor = Cursors.Hand;
-            button16.FlatAppearance.BorderSize = 0;
-            button16.FlatStyle = FlatStyle.Flat;
-            button16.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            button16.ForeColor = Color.PaleVioletRed;
-            button16.Location = new Point(19, 99);
-            button16.Name = "button16";
-            button16.Size = new Size(328, 53);
-            button16.TabIndex = 17;
-            button16.Text = "Размытие по Гаусу";
-            button16.UseVisualStyleBackColor = true;
-            // 
-            // button17
-            // 
-            button17.BackgroundImage = (Image)resources.GetObject("button17.BackgroundImage");
-            button17.BackgroundImageLayout = ImageLayout.Stretch;
-            button17.Cursor = Cursors.Hand;
-            button17.FlatAppearance.BorderSize = 0;
-            button17.FlatStyle = FlatStyle.Flat;
-            button17.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            button17.ForeColor = Color.PaleVioletRed;
-            button17.Location = new Point(19, 217);
-            button17.Name = "button17";
-            button17.Size = new Size(328, 53);
-            button17.TabIndex = 19;
-            button17.Text = "Среднеарифм. фильтр.";
-            button17.UseVisualStyleBackColor = true;
-            // 
-            // button18
-            // 
-            button18.BackgroundImage = (Image)resources.GetObject("button18.BackgroundImage");
-            button18.BackgroundImageLayout = ImageLayout.Stretch;
-            button18.Cursor = Cursors.Hand;
-            button18.FlatAppearance.BorderSize = 0;
-            button18.FlatStyle = FlatStyle.Flat;
-            button18.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            button18.ForeColor = Color.PaleVioletRed;
-            button18.Location = new Point(19, 158);
-            button18.Name = "button18";
-            button18.Size = new Size(328, 53);
-            button18.TabIndex = 18;
-            button18.Text = "Медианная фильтрация ";
-            button18.UseVisualStyleBackColor = true;
             // 
             // button19
             // 
@@ -465,32 +408,80 @@
             button22.Text = "Среднегеом. фильтр.";
             button22.UseVisualStyleBackColor = true;
             // 
+            // button17
+            // 
+            button17.BackgroundImage = (Image)resources.GetObject("button17.BackgroundImage");
+            button17.BackgroundImageLayout = ImageLayout.Stretch;
+            button17.Cursor = Cursors.Hand;
+            button17.FlatAppearance.BorderSize = 0;
+            button17.FlatStyle = FlatStyle.Flat;
+            button17.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button17.ForeColor = Color.PaleVioletRed;
+            button17.Location = new Point(19, 217);
+            button17.Name = "button17";
+            button17.Size = new Size(328, 53);
+            button17.TabIndex = 19;
+            button17.Text = "Среднеарифм. фильтр.";
+            button17.UseVisualStyleBackColor = true;
+            // 
+            // button18
+            // 
+            button18.BackgroundImage = (Image)resources.GetObject("button18.BackgroundImage");
+            button18.BackgroundImageLayout = ImageLayout.Stretch;
+            button18.Cursor = Cursors.Hand;
+            button18.FlatAppearance.BorderSize = 0;
+            button18.FlatStyle = FlatStyle.Flat;
+            button18.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button18.ForeColor = Color.PaleVioletRed;
+            button18.Location = new Point(19, 158);
+            button18.Name = "button18";
+            button18.Size = new Size(328, 53);
+            button18.TabIndex = 18;
+            button18.Text = "Медианная фильтрация ";
+            button18.UseVisualStyleBackColor = true;
+            // 
+            // button16
+            // 
+            button16.BackgroundImage = (Image)resources.GetObject("button16.BackgroundImage");
+            button16.BackgroundImageLayout = ImageLayout.Stretch;
+            button16.Cursor = Cursors.Hand;
+            button16.FlatAppearance.BorderSize = 0;
+            button16.FlatStyle = FlatStyle.Flat;
+            button16.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button16.ForeColor = Color.PaleVioletRed;
+            button16.Location = new Point(19, 99);
+            button16.Name = "button16";
+            button16.Size = new Size(328, 53);
+            button16.TabIndex = 17;
+            button16.Text = "Размытие по Гаусу";
+            button16.UseVisualStyleBackColor = true;
+            // 
+            // button15
+            // 
+            button15.BackgroundImage = (Image)resources.GetObject("button15.BackgroundImage");
+            button15.BackgroundImageLayout = ImageLayout.Stretch;
+            button15.Cursor = Cursors.Hand;
+            button15.FlatAppearance.BorderSize = 0;
+            button15.FlatStyle = FlatStyle.Flat;
+            button15.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button15.ForeColor = Color.PaleVioletRed;
+            button15.Location = new Point(19, 40);
+            button15.Name = "button15";
+            button15.Size = new Size(328, 53);
+            button15.TabIndex = 16;
+            button15.Text = "Обычный блюр";
+            button15.UseVisualStyleBackColor = true;
+            // 
             // panel3
             // 
             panel3.BackgroundImage = Properties.Resources.дваокна;
             panel3.BackgroundImageLayout = ImageLayout.Stretch;
             panel3.Controls.Add(button24);
             panel3.Controls.Add(button23);
-            panel3.Location = new Point(127, 73);
+            panel3.Location = new Point(332, 80);
             panel3.Name = "panel3";
             panel3.Size = new Size(377, 162);
             panel3.TabIndex = 14;
-            // 
-            // button23
-            // 
-            button23.BackgroundImage = (Image)resources.GetObject("button23.BackgroundImage");
-            button23.BackgroundImageLayout = ImageLayout.Stretch;
-            button23.Cursor = Cursors.Hand;
-            button23.FlatAppearance.BorderSize = 0;
-            button23.FlatStyle = FlatStyle.Flat;
-            button23.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            button23.ForeColor = Color.PaleVioletRed;
-            button23.Location = new Point(18, 28);
-            button23.Name = "button23";
-            button23.Size = new Size(328, 53);
-            button23.TabIndex = 24;
-            button23.Text = "Соль и перец";
-            button23.UseVisualStyleBackColor = true;
             // 
             // button24
             // 
@@ -508,6 +499,22 @@
             button24.Text = "Гауссов шум";
             button24.UseVisualStyleBackColor = true;
             // 
+            // button23
+            // 
+            button23.BackgroundImage = (Image)resources.GetObject("button23.BackgroundImage");
+            button23.BackgroundImageLayout = ImageLayout.Stretch;
+            button23.Cursor = Cursors.Hand;
+            button23.FlatAppearance.BorderSize = 0;
+            button23.FlatStyle = FlatStyle.Flat;
+            button23.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button23.ForeColor = Color.PaleVioletRed;
+            button23.Location = new Point(18, 28);
+            button23.Name = "button23";
+            button23.Size = new Size(328, 53);
+            button23.TabIndex = 24;
+            button23.Text = "Соль и перец";
+            button23.UseVisualStyleBackColor = true;
+            // 
             // panel4
             // 
             panel4.BackgroundImage = Properties.Resources.четвокна;
@@ -516,58 +523,11 @@
             panel4.Controls.Add(button27);
             panel4.Controls.Add(button26);
             panel4.Controls.Add(button25);
-            panel4.Location = new Point(134, 73);
+            panel4.Location = new Point(341, 74);
             panel4.Name = "panel4";
             panel4.Size = new Size(377, 275);
             panel4.TabIndex = 15;
-            // 
-            // button25
-            // 
-            button25.BackgroundImage = (Image)resources.GetObject("button25.BackgroundImage");
-            button25.BackgroundImageLayout = ImageLayout.Stretch;
-            button25.Cursor = Cursors.Hand;
-            button25.FlatAppearance.BorderSize = 0;
-            button25.FlatStyle = FlatStyle.Flat;
-            button25.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            button25.ForeColor = Color.PaleVioletRed;
-            button25.Location = new Point(19, 20);
-            button25.Name = "button25";
-            button25.Size = new Size(328, 53);
-            button25.TabIndex = 26;
-            button25.Text = "ф-р Превитта";
-            button25.UseVisualStyleBackColor = true;
-            // 
-            // button26
-            // 
-            button26.BackgroundImage = (Image)resources.GetObject("button26.BackgroundImage");
-            button26.BackgroundImageLayout = ImageLayout.Stretch;
-            button26.Cursor = Cursors.Hand;
-            button26.FlatAppearance.BorderSize = 0;
-            button26.FlatStyle = FlatStyle.Flat;
-            button26.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            button26.ForeColor = Color.PaleVioletRed;
-            button26.Location = new Point(19, 83);
-            button26.Name = "button26";
-            button26.Size = new Size(328, 53);
-            button26.TabIndex = 27;
-            button26.Text = "ф-р Собеля";
-            button26.UseVisualStyleBackColor = true;
-            // 
-            // button27
-            // 
-            button27.BackgroundImage = (Image)resources.GetObject("button27.BackgroundImage");
-            button27.BackgroundImageLayout = ImageLayout.Stretch;
-            button27.Cursor = Cursors.Hand;
-            button27.FlatAppearance.BorderSize = 0;
-            button27.FlatStyle = FlatStyle.Flat;
-            button27.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            button27.ForeColor = Color.PaleVioletRed;
-            button27.Location = new Point(19, 146);
-            button27.Name = "button27";
-            button27.Size = new Size(328, 53);
-            button27.TabIndex = 28;
-            button27.Text = "Метод Марра-Хилдерта";
-            button27.UseVisualStyleBackColor = true;
+            panel4.Paint += panel4_Paint;
             // 
             // button28
             // 
@@ -585,6 +545,54 @@
             button28.Text = "Метод Кэнии";
             button28.UseVisualStyleBackColor = true;
             // 
+            // button27
+            // 
+            button27.BackgroundImage = (Image)resources.GetObject("button27.BackgroundImage");
+            button27.BackgroundImageLayout = ImageLayout.Stretch;
+            button27.Cursor = Cursors.Hand;
+            button27.FlatAppearance.BorderSize = 0;
+            button27.FlatStyle = FlatStyle.Flat;
+            button27.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button27.ForeColor = Color.PaleVioletRed;
+            button27.Location = new Point(19, 146);
+            button27.Name = "button27";
+            button27.Size = new Size(328, 53);
+            button27.TabIndex = 28;
+            button27.Text = "Метод Марра-Хилдерта";
+            button27.UseVisualStyleBackColor = true;
+            // 
+            // button26
+            // 
+            button26.BackgroundImage = (Image)resources.GetObject("button26.BackgroundImage");
+            button26.BackgroundImageLayout = ImageLayout.Stretch;
+            button26.Cursor = Cursors.Hand;
+            button26.FlatAppearance.BorderSize = 0;
+            button26.FlatStyle = FlatStyle.Flat;
+            button26.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button26.ForeColor = Color.PaleVioletRed;
+            button26.Location = new Point(19, 83);
+            button26.Name = "button26";
+            button26.Size = new Size(328, 53);
+            button26.TabIndex = 27;
+            button26.Text = "ф-р Собеля";
+            button26.UseVisualStyleBackColor = true;
+            // 
+            // button25
+            // 
+            button25.BackgroundImage = (Image)resources.GetObject("button25.BackgroundImage");
+            button25.BackgroundImageLayout = ImageLayout.Stretch;
+            button25.Cursor = Cursors.Hand;
+            button25.FlatAppearance.BorderSize = 0;
+            button25.FlatStyle = FlatStyle.Flat;
+            button25.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button25.ForeColor = Color.PaleVioletRed;
+            button25.Location = new Point(19, 20);
+            button25.Name = "button25";
+            button25.Size = new Size(328, 53);
+            button25.TabIndex = 26;
+            button25.Text = "ф-р Превитта";
+            button25.UseVisualStyleBackColor = true;
+            // 
             // panel5
             // 
             panel5.BackgroundImage = Properties.Resources.четвокна;
@@ -593,76 +601,11 @@
             panel5.Controls.Add(button32);
             panel5.Controls.Add(button31);
             panel5.Controls.Add(button30);
-            panel5.Location = new Point(152, 71);
+            panel5.Location = new Point(338, 77);
             panel5.Name = "panel5";
             panel5.Size = new Size(377, 283);
             panel5.TabIndex = 16;
             panel5.Paint += panel5_Paint;
-            // 
-            // button29
-            // 
-            button29.BackgroundImage = Properties.Resources.черное1;
-            button29.BackgroundImageLayout = ImageLayout.Stretch;
-            button29.Cursor = Cursors.Hand;
-            button29.FlatAppearance.BorderSize = 0;
-            button29.FlatStyle = FlatStyle.Flat;
-            button29.Font = new Font("Times New Roman", 14.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            button29.ForeColor = Color.PaleVioletRed;
-            button29.Location = new Point(427, 9);
-            button29.Name = "button29";
-            button29.Size = new Size(160, 31);
-            button29.TabIndex = 17;
-            button29.Text = "Исходное изобр.";
-            button29.UseVisualStyleBackColor = true;
-            button29.Click += button29_Click;
-            // 
-            // button30
-            // 
-            button30.BackgroundImage = (Image)resources.GetObject("button30.BackgroundImage");
-            button30.BackgroundImageLayout = ImageLayout.Stretch;
-            button30.Cursor = Cursors.Hand;
-            button30.FlatAppearance.BorderSize = 0;
-            button30.FlatStyle = FlatStyle.Flat;
-            button30.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            button30.ForeColor = Color.PaleVioletRed;
-            button30.Location = new Point(20, 19);
-            button30.Name = "button30";
-            button30.Size = new Size(328, 53);
-            button30.TabIndex = 24;
-            button30.Text = "Пороговая сегментация";
-            button30.UseVisualStyleBackColor = true;
-            // 
-            // button31
-            // 
-            button31.BackgroundImage = (Image)resources.GetObject("button31.BackgroundImage");
-            button31.BackgroundImageLayout = ImageLayout.Stretch;
-            button31.Cursor = Cursors.Hand;
-            button31.FlatAppearance.BorderSize = 0;
-            button31.FlatStyle = FlatStyle.Flat;
-            button31.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            button31.ForeColor = Color.PaleVioletRed;
-            button31.Location = new Point(19, 83);
-            button31.Name = "button31";
-            button31.Size = new Size(328, 53);
-            button31.TabIndex = 25;
-            button31.Text = "Двухпороговая сегм.";
-            button31.UseVisualStyleBackColor = true;
-            // 
-            // button32
-            // 
-            button32.BackgroundImage = (Image)resources.GetObject("button32.BackgroundImage");
-            button32.BackgroundImageLayout = ImageLayout.Stretch;
-            button32.Cursor = Cursors.Hand;
-            button32.FlatAppearance.BorderSize = 0;
-            button32.FlatStyle = FlatStyle.Flat;
-            button32.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
-            button32.ForeColor = Color.PaleVioletRed;
-            button32.Location = new Point(19, 147);
-            button32.Name = "button32";
-            button32.Size = new Size(328, 53);
-            button32.TabIndex = 26;
-            button32.Text = "С глобальным порогом";
-            button32.UseVisualStyleBackColor = true;
             // 
             // button33
             // 
@@ -680,6 +623,71 @@
             button33.Text = "Оцу";
             button33.UseVisualStyleBackColor = true;
             button33.Click += button33_Click;
+            // 
+            // button32
+            // 
+            button32.BackgroundImage = (Image)resources.GetObject("button32.BackgroundImage");
+            button32.BackgroundImageLayout = ImageLayout.Stretch;
+            button32.Cursor = Cursors.Hand;
+            button32.FlatAppearance.BorderSize = 0;
+            button32.FlatStyle = FlatStyle.Flat;
+            button32.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button32.ForeColor = Color.PaleVioletRed;
+            button32.Location = new Point(19, 147);
+            button32.Name = "button32";
+            button32.Size = new Size(328, 53);
+            button32.TabIndex = 26;
+            button32.Text = "С глобальным порогом";
+            button32.UseVisualStyleBackColor = true;
+            // 
+            // button31
+            // 
+            button31.BackgroundImage = (Image)resources.GetObject("button31.BackgroundImage");
+            button31.BackgroundImageLayout = ImageLayout.Stretch;
+            button31.Cursor = Cursors.Hand;
+            button31.FlatAppearance.BorderSize = 0;
+            button31.FlatStyle = FlatStyle.Flat;
+            button31.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button31.ForeColor = Color.PaleVioletRed;
+            button31.Location = new Point(19, 83);
+            button31.Name = "button31";
+            button31.Size = new Size(328, 53);
+            button31.TabIndex = 25;
+            button31.Text = "Двухпороговая сегм.";
+            button31.UseVisualStyleBackColor = true;
+            // 
+            // button30
+            // 
+            button30.BackgroundImage = (Image)resources.GetObject("button30.BackgroundImage");
+            button30.BackgroundImageLayout = ImageLayout.Stretch;
+            button30.Cursor = Cursors.Hand;
+            button30.FlatAppearance.BorderSize = 0;
+            button30.FlatStyle = FlatStyle.Flat;
+            button30.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button30.ForeColor = Color.PaleVioletRed;
+            button30.Location = new Point(20, 19);
+            button30.Name = "button30";
+            button30.Size = new Size(328, 53);
+            button30.TabIndex = 24;
+            button30.Text = "Пороговая сегментация";
+            button30.UseVisualStyleBackColor = true;
+            // 
+            // button29
+            // 
+            button29.BackgroundImage = Properties.Resources.черное1;
+            button29.BackgroundImageLayout = ImageLayout.Stretch;
+            button29.Cursor = Cursors.Hand;
+            button29.FlatAppearance.BorderSize = 0;
+            button29.FlatStyle = FlatStyle.Flat;
+            button29.Font = new Font("Times New Roman", 14.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button29.ForeColor = Color.PaleVioletRed;
+            button29.Location = new Point(427, 9);
+            button29.Name = "button29";
+            button29.Size = new Size(160, 31);
+            button29.TabIndex = 17;
+            button29.Text = "Исходное изобр.";
+            button29.UseVisualStyleBackColor = true;
+            button29.Click += button29_Click;
             // 
             // Form1
             // 
