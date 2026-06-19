@@ -111,9 +111,9 @@
             button2.FlatAppearance.BorderSize = 0;
             button2.FlatStyle = FlatStyle.Flat;
             button2.Font = new Font("Segoe UI", 1F);
-            button2.Location = new Point(634, 6);
+            button2.Location = new Point(634, 8);
             button2.Name = "button2";
-            button2.Size = new Size(36, 36);
+            button2.Size = new Size(31, 31);
             button2.TabIndex = 2;
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
@@ -125,9 +125,9 @@
             button3.Cursor = Cursors.Hand;
             button3.FlatAppearance.BorderSize = 0;
             button3.FlatStyle = FlatStyle.Flat;
-            button3.Location = new Point(673, 6);
+            button3.Location = new Point(670, 8);
             button3.Name = "button3";
-            button3.Size = new Size(36, 36);
+            button3.Size = new Size(31, 31);
             button3.TabIndex = 3;
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
