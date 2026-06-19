@@ -244,6 +244,7 @@ namespace CV_Ultra
             button9.BackgroundImage = Properties.Resources.светбольшая;
             button10.BackgroundImage = Properties.Resources.светбольшая;
             button11.BackgroundImage = Properties.Resources.светбольшая;
+            button29.BackgroundImage = Properties.Resources.кнопкасветкрасиво;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -260,6 +261,27 @@ namespace CV_Ultra
             button9.BackgroundImage = Properties.Resources.черное2;
             button10.BackgroundImage = Properties.Resources.черное2;
             button11.BackgroundImage = Properties.Resources.черное2;
+            button29.BackgroundImage = Properties.Resources.черное;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel5_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button33_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

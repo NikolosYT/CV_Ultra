@@ -73,6 +73,16 @@ namespace CV_Ultra.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap дваокна {
+            get {
+                object obj = ResourceManager.GetObject("дваокна", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap кнопка_светли {
             get {
                 object obj = ResourceManager.GetObject("кнопка светли", resourceCulture);
@@ -113,9 +123,49 @@ namespace CV_Ultra.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap окнопреобраз {
+            get {
+                object obj = ResourceManager.GetObject("окнопреобраз", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap окнотемдва {
+            get {
+                object obj = ResourceManager.GetObject("окнотемдва", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap основа_темной_темы_с_кнопками_вывода_и_загрузки {
             get {
                 object obj = ResourceManager.GetObject("основа темной темы с кнопками вывода и загрузки", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap преобораз {
+            get {
+                object obj = ResourceManager.GetObject("преобораз", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap пустоеокно {
+            get {
+                object obj = ResourceManager.GetObject("пустоеокно", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -186,6 +236,16 @@ namespace CV_Ultra.Properties {
         public static System.Drawing.Bitmap черное2 {
             get {
                 object obj = ResourceManager.GetObject("черное2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap четвокна {
+            get {
+                object obj = ResourceManager.GetObject("четвокна", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
