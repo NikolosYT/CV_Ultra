@@ -4,12 +4,6 @@ namespace CV_Ultra
     {
         public Form1()
         {
-            InitializeComponent();
-            panel1.Visible = false;
-            panel2.Visible = false;
-            panel3.Visible = false;
-            panel4.Visible = false;
-            panel5.Visible = false;
         }
 
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------

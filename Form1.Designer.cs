@@ -278,6 +278,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(377, 229);
             panel1.TabIndex = 12;
+            panel1.Visible = false;
             // 
             // button14
             // 
@@ -343,6 +344,7 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(377, 543);
             panel2.TabIndex = 13;
+            panel2.Visible = false;
             // 
             // button19
             // 
@@ -482,6 +484,7 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(377, 162);
             panel3.TabIndex = 14;
+            panel3.Visible = false;
             // 
             // button24
             // 
@@ -527,6 +530,7 @@
             panel4.Name = "panel4";
             panel4.Size = new Size(377, 275);
             panel4.TabIndex = 15;
+            panel4.Visible = false;
             panel4.Paint += panel4_Paint;
             // 
             // button28
@@ -605,6 +609,7 @@
             panel5.Name = "panel5";
             panel5.Size = new Size(377, 283);
             panel5.TabIndex = 16;
+            panel5.Visible = false;
             panel5.Paint += panel5_Paint;
             // 
             // button33
