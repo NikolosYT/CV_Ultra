@@ -253,84 +253,442 @@ namespace CV_Ultra
 
             return resultBitmap;
         }
-        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-        // Шум "Соль и перец"
-        private Bitmap AddSaltAndPepperNoise(Bitmap src, double noiseAmount)
+
+        // Среднеарифметическая
+        public Bitmap ApplyArithmeticMeanFilter(Bitmap sourceBitmap, int radius)
         {
-            int width = src.Width;
-            int height = src.Height;
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+            Bitmap resultBitmap = new Bitmap(width, height);
 
-            Bitmap result = new Bitmap(src);
-
-            Random rnd = new Random();
-
-            for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
             {
+                for (int x = 0; x < width; x++)
+                {
+                    double sum = 0;
+                    int count = 0;
+
+                    // Пробегаем по квадратному окну вокруг пикселя
+                    for (int ky = -radius; ky <= radius; ky++)
+                    {
+                        for (int kx = -radius; kx <= radius; kx++)
+                        {
+                            int pixelX = Math.Min(Math.Max(x + kx, 0), width - 1);
+                            int pixelY = Math.Min(Math.Max(y + ky, 0), height - 1);
+
+                            sum += sourceBitmap.GetPixel(pixelX, pixelY).R;
+                            count++;
+                        }
+                    }
+
+                    // Среднее арифметическое
+                    int finalGray = (int)(sum / count);
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(finalGray, finalGray, finalGray));
+                }
+            }
+
+            return resultBitmap;
+        }
+
+        // Среднегеометрическая фильтрация
+        public Bitmap ApplyGeometricMeanFilter(Bitmap sourceBitmap, int radius)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+            Bitmap resultBitmap = new Bitmap(width, height);
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    double logSum = 0;
+                    int count = 0;
+
+                    for (int ky = -radius; ky <= radius; ky++)
+                    {
+                        for (int kx = -radius; kx <= radius; kx++)
+                        {
+                            int pixelX = Math.Min(Math.Max(x + kx, 0), width - 1);
+                            int pixelY = Math.Min(Math.Max(y + ky, 0), height - 1);
+
+                            int grayVal = sourceBitmap.GetPixel(pixelX, pixelY).R;
+
+                            // Избегаем логарифма нуля (если пиксель абсолютно черный, берем микро-значение)
+                            logSum += Math.Log(grayVal == 0 ? 0.001 : grayVal);
+                            count++;
+                        }
+                    }
+
+                    // Считаем среднегеометрическое через экспоненту от среднего логарифмов
+                    int finalGray = (int)Math.Exp(logSum / count);
+
+                    // Ограничиваем на всякий случай
+                    finalGray = Math.Min(Math.Max(finalGray, 0), 255);
+
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(finalGray, finalGray, finalGray));
+                }
+            }
+
+            return resultBitmap;
+        }
+
+        // Медианная фильтрация
+        public Bitmap ApplyMedianFilter(Bitmap sourceBitmap, int radius)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+            Bitmap resultBitmap = new Bitmap(width, height);
+
+            // Вычисляем размер окна (например, для радиуса 1 размер будет 3*3 = 9)
+            int kernelSize = radius * 2 + 1;
+            int totalPixels = kernelSize * kernelSize;
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    // Массив, куда мы будем собирать яркости пикселей из окна
+                    int[] windowPixels = new int[totalPixels];
+                    int index = 0;
+
+                    for (int ky = -radius; ky <= radius; ky++)
+                    {
+                        for (int kx = -radius; kx <= radius; kx++)
+                        {
+                            int pixelX = Math.Min(Math.Max(x + kx, 0), width - 1);
+                            int pixelY = Math.Min(Math.Max(y + ky, 0), height - 1);
+
+                            windowPixels[index] = sourceBitmap.GetPixel(pixelX, pixelY).R;
+                            index++;
+                        }
+                    }
+
+                    // Сортируем массив по возрастанию
+                    Array.Sort(windowPixels);
+
+                    // Берём значение, которое оказалось ровно по центру
+                    int medianGray = windowPixels[totalPixels / 2];
+
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(medianGray, medianGray, medianGray));
+                }
+            }
+
+            return resultBitmap;
+        }
+
+        // Адаптивная медианная фильтрация
+        public Bitmap ApplyAdaptiveMedianFilter(Bitmap sourceBitmap, int startRadius, int maxRadius)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+            Bitmap resultBitmap = new Bitmap(width, height);
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int currentRadius = startRadius;
+                    int finalGray = sourceBitmap.GetPixel(x, y).R;
+                    bool pixelProcessed = false;
+
+                    // Цикл адаптивного расширения окна
+                    while (currentRadius <= maxRadius && !pixelProcessed)
+                    {
+                        int kernelSize = currentRadius * 2 + 1;
+                        int totalPixels = kernelSize * kernelSize;
+                        int[] windowPixels = new int[totalPixels];
+                        int index = 0;
+
+                        // Собираем пиксели из текущего окна
+                        for (int ky = -currentRadius; ky <= currentRadius; ky++)
+                        {
+                            for (int kx = -currentRadius; kx <= currentRadius; kx++)
+                            {
+                                int pixelX = Math.Min(Math.Max(x + kx, 0), width - 1);
+                                int pixelY = Math.Min(Math.Max(y + ky, 0), height - 1);
+
+                                windowPixels[index] = sourceBitmap.GetPixel(pixelX, pixelY).R;
+                                index++;
+                            }
+                        }
+
+                        // Сортируем для поиска минимума, максимума и медианы
+                        Array.Sort(windowPixels);
+
+                        int zMin = windowPixels[0];
+                        int zMax = windowPixels[totalPixels - 1];
+                        int zMed = windowPixels[totalPixels / 2];
+                        int zXY = sourceBitmap.GetPixel(x, y).R;
+
+                        // УРОВЕНЬ А: Проверяем, пригодна ли медиана
+                        if (zMin < zMed && zMed < zMax)
+                        {
+                            // УРОВЕНЬ Б: Проверяем сам пиксель
+                            if (zMin < zXY && zXY < zMax)
+                            {
+                                finalGray = zXY; // Пиксель хороший, оставляем оригинал
+                            }
+                            else
+                            {
+                                finalGray = zMed; // Пиксель битый (соль/перец), заменяем на медиану
+                            }
+                            pixelProcessed = true; // Выходим из while для этого пикселя
+                        }
+                        else
+                        {
+                            // Медиана сама является шумом (0 или 255) -> увеличиваем окно
+                            currentRadius++;
+                        }
+                    }
+
+                    // Если дошли до maxRadius и не нашли чистую медиану, 
+                    // вынужденно возвращаем последнее посчитанное значение медианы
+                    if (!pixelProcessed)
+                    {
+                        // На всякий случай перестраховываемся
+                        pixelProcessed = true;
+                    }
+
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(finalGray, finalGray, finalGray));
+                }
+            }
+
+            return resultBitmap;
+        }
+
+        // Инверсная фильтрация
+
+        public Bitmap ApplyInverseFilter(Bitmap sourceBitmap, double threshold = 0.05)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+            Bitmap resultBitmap = new Bitmap(width, height);
+
+            // Зашиваем модель искажения (PSF) прямо внутрь функции
+            // Сумма всех элементов равна 1, центрированное размытие
+            double[,] psfKernel = new double[3, 3] {
+        { 0.05, 0.1, 0.05 },
+        { 0.1,  0.4, 0.1 },
+        { 0.05, 0.1, 0.05 }
+    };
+
+            int radius = 1; // Так как размер матрицы 3х3, радиус равен 1
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    double currentPixel = sourceBitmap.GetPixel(x, y).R;
+                    double blurContribution = 0;
+
+                    for (int ky = -radius; ky <= radius; ky++)
+                    {
+                        for (int kx = -radius; kx <= radius; kx++)
+                        {
+                            int px = Math.Min(Math.Max(x + kx, 0), width - 1);
+                            int py = Math.Min(Math.Max(y + ky, 0), height - 1);
+
+                            // Считаем вклад соседних пикселей
+                            if (kx != 0 || ky != 0)
+                            {
+                                blurContribution += sourceBitmap.GetPixel(px, py).R * psfKernel[ky + radius, kx + radius];
+                            }
+                        }
+                    }
+
+                    // Центральный коэффициент (у нас он равен 0.4)
+                    double centerWeight = psfKernel[radius, radius];
+
+                    // Защита от деления на слишком маленькие числа (порог отсечения шума)
+                    if (Math.Abs(centerWeight) < threshold) centerWeight = threshold;
+
+                    // Обратная операция (деконволюция в пространственной области)
+                    int finalGray = (int)((currentPixel - blurContribution) / centerWeight);
+
+                    // Ограничиваем диапазон, чтобы не вылететь за [0, 255]
+                    finalGray = Math.Min(Math.Max(finalGray, 0), 255);
+
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(finalGray, finalGray, finalGray));
+                }
+            }
+
+            return resultBitmap;
+        }
+
+        // Реконструкция Люси-Ричардсона
+
+        public Bitmap ApplyRichardsonLucyFilter(Bitmap sourceBitmap, int iterations = 5)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+
+            // Шаблон ядра размытия (PSF)
+            double[,] psf = new double[3, 3] {
+        { 0.05, 0.1, 0.05 },
+        { 0.1,  0.4, 0.1 },
+        { 0.05, 0.1, 0.05 }
+    };
+            int radius = 1;
+
+            // Переводим исходный Bitmap в массив double для удобства вычислений
+            double[,] g = new double[width, height];
+            double[,] f = new double[width, height]; // Текущее приближение (f_k)
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    g[x, y] = sourceBitmap.GetPixel(x, y).R;
+                    f[x, y] = g[x, y]; // Изначально f_0 совпадает с искаженной картинкой
+                }
+            }
+
+            // Главный цикл итераций восстановления
+            for (int iter = 0; iter < iterations; iter++)
+            {
+                // 1. Шаг: Размываем текущее приближение (f * H)
+                double[,] blurredF = new double[width, height];
                 for (int y = 0; y < height; y++)
                 {
-                    double r = rnd.NextDouble();
-
-                    if (r < noiseAmount / 2.0)
+                    for (int x = 0; x < width; x++)
                     {
-                        result.SetPixel(x, y, Color.Black);
+                        double sum = 0;
+                        for (int ky = -radius; ky <= radius; ky++)
+                        {
+                            for (int kx = -radius; kx <= radius; kx++)
+                            {
+                                int px = Math.Min(Math.Max(x + kx, 0), width - 1);
+                                int py = Math.Min(Math.Max(y + ky, 0), height - 1);
+                                sum += f[px, py] * psf[ky + radius, kx + radius];
+                            }
+                        }
+                        blurredF[x, y] = sum;
                     }
-                    else if (r < noiseAmount)
+                }
+
+                // 2. Шаг: Считаем относительную ошибку (g / blurredF) и делаем обратную свертку
+                double[,] correction = new double[width, height];
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
                     {
-                        result.SetPixel(x, y, Color.White);
+                        // Избегаем деления на ноль
+                        double ratio = blurredF[x, y] < 0.001 ? 0 : g[x, y] / blurredF[x, y];
+
+                        double sum = 0;
+                        // Свертка с сопряженным ядром (для симметричного ядра код идентичен первому шагу)
+                        for (int ky = -radius; ky <= radius; ky++)
+                        {
+                            for (int kx = -radius; kx <= radius; kx++)
+                            {
+                                int px = Math.Min(Math.Max(x + kx, 0), width - 1);
+                                int py = Math.Min(Math.Max(y + ky, 0), height - 1);
+                                sum += ratio * psf[ky + radius, kx + radius];
+                            }
+                        }
+                        correction[x, y] = sum;
+                    }
+                }
+
+                // 3. Шаг: Обновляем изображение f_{k+1} = f_k * correction
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
+                    {
+                        f[x, y] = f[x, y] * correction[x, y];
                     }
                 }
             }
 
-            return result;
+            // Собираем итоговый Bitmap
+            Bitmap resultBitmap = new Bitmap(width, height);
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int finalGray = (int)f[x, y];
+                    finalGray = Math.Min(Math.Max(finalGray, 0), 255);
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(finalGray, finalGray, finalGray));
+                }
+            }
+
+            return resultBitmap;
+        }
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // Шум "Соль и перец"
+        public Bitmap ApplySaltAndPepperNoise(Bitmap sourceBitmap, double percentage)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+
+            // ГАРАНТИЯ РАБОТЫ: Создаем холст в стандартном 32-битном формате, где SetPixel разрешен
+            Bitmap resultBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            // Честно копируем графику оригинала на новый холст
+            using (Graphics g = Graphics.FromImage(resultBitmap))
+            {
+                g.DrawImage(sourceBitmap, 0, 0, width, height);
+            }
+
+            Random rand = new Random();
+            int totalPixels = width * height;
+
+            // Внимание: percentage передавать как целое число (например, 10 для 10%)
+            int noisePixelsCount = (int)(totalPixels * (percentage / 100.0));
+
+            for (int i = 0; i < noisePixelsCount; i++)
+            {
+                int x = rand.Next(0, width);
+                int y = rand.Next(0, height);
+
+                // 0 - черный (перец), 255 - белый (соль)
+                int noiseColor = rand.Next(0, 2) == 0 ? 0 : 255;
+
+                // Явно передаем Alpha = 255, чтобы пиксель не стал прозрачным
+                resultBitmap.SetPixel(x, y, Color.FromArgb(255, noiseColor, noiseColor, noiseColor));
+            }
+
+            return resultBitmap;
         }
 
         // Гауссов шум
-        // Добавляет к каждому пикселю случайное отклонение,
-        private Bitmap AddGaussianNoise(Bitmap src, double mean, double sigma)
+        public Bitmap ApplyGaussianNoise(Bitmap sourceBitmap, double standardDeviation)
         {
-            int width = src.Width;
-            int height = src.Height;
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
 
-            // Создаем новое изображение для результата
-            Bitmap result = new Bitmap(width, height);
+            // Точно так же создаем независимый открытый холст
+            Bitmap resultBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-            // Генератор случайных чисел
-            Random rnd = new Random();
+            Random rand = new Random();
 
-            // Проходим по всем пикселям изображения
-            for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
             {
-                for (int y = 0; y < height; y++)
+                for (int x = 0; x < width; x++)
                 {
-                    // Получаем яркость текущего пикселя
-                    int gray = src.GetPixel(x, y).R;
+                    // Извлекаем яркость из оригинальной картинки
+                    int originalGray = sourceBitmap.GetPixel(x, y).R;
 
-                    // Генерация случайного числа по нормальному распределению
-                    // Метод Бокса-Мюллера
-                    double u1 = rnd.NextDouble();
-                    double u2 = rnd.NextDouble();
+                    // Преобразование Бокса-Мюллера для генерации нормального распределения
+                    double u1 = 1.0 - rand.NextDouble();
+                    double u2 = 1.0 - rand.NextDouble();
 
-                    double gaussian =
-                        Math.Sqrt(-2.0 * Math.Log(u1)) *
-                        Math.Cos(2.0 * Math.PI * u2);
+                    // Защита от микроскопического нуля для логарифма
+                    if (u1 <= 0) u1 = 0.000001;
 
-                    // Добавляем случайное отклонение к яркости пикселя
-                    int newGray = (int)(gray + mean + sigma * gaussian);
+                    double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
+                    double noise = standardDeviation * randStdNormal;
 
-                    // Ограничиваем значение диапазоном [0;255]
-                    if (newGray < 0) newGray = 0;
-                    if (newGray > 255) newGray = 255;
+                    // Смешиваем и жестко зажимаем в рамки байта
+                    int finalGray = (int)(originalGray + noise);
+                    if (finalGray < 0) finalGray = 0;
+                    if (finalGray > 255) finalGray = 255;
 
-                    // Записываем новый пиксель в результирующее изображение
-                    result.SetPixel(
-                        x,
-                        y,
-                        Color.FromArgb(newGray, newGray, newGray)
-                    );
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(255, finalGray, finalGray, finalGray));
                 }
             }
 
-            return result;
+            return resultBitmap;
         }
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
         // PSNR 
@@ -636,11 +994,11 @@ namespace CV_Ultra
         }
         private void button23_Click(object sender, EventArgs e)
         {
-            pictureBox1.BackgroundImage = AddSaltAndPepperNoise(new Bitmap(pictureBox1.BackgroundImage), 0.1);
+            pictureBox1.BackgroundImage = ApplySaltAndPepperNoise(new Bitmap(pictureBox1.BackgroundImage), 50);
         }
         private void button24_Click(object sender, EventArgs e)
         {
-            pictureBox1.BackgroundImage = AddGaussianNoise(new Bitmap(pictureBox1.BackgroundImage), 0, 20);
+            pictureBox1.BackgroundImage = ApplyGaussianNoise(new Bitmap(pictureBox1.BackgroundImage), 50);
         }
 
         private void button4_Click_1(object sender, EventArgs e)
@@ -677,6 +1035,36 @@ namespace CV_Ultra
         private void button16_Click(object sender, EventArgs e)
         {
             pictureBox1.BackgroundImage = ApplyGaussianBlurToGrayscale(new Bitmap(pictureBox1.BackgroundImage), 3, 45);
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplyMedianFilter(new Bitmap(pictureBox1.BackgroundImage), 3);
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplyArithmeticMeanFilter(new Bitmap(pictureBox1.BackgroundImage), 3);
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplyGeometricMeanFilter(new Bitmap(pictureBox1.BackgroundImage), 3);
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplyAdaptiveMedianFilter(new Bitmap(pictureBox1.BackgroundImage), 1, 3);
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplyInverseFilter(new Bitmap(pictureBox1.BackgroundImage));
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplyRichardsonLucyFilter(new Bitmap(pictureBox1.BackgroundImage), 5);
         }
     }
 }

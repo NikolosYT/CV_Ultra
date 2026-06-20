@@ -367,6 +367,7 @@
             button19.TabIndex = 23;
             button19.Text = "Рекон. Люси-Ричардсона";
             button19.UseVisualStyleBackColor = true;
+            button19.Click += button19_Click;
             // 
             // button20
             // 
@@ -383,6 +384,7 @@
             button20.TabIndex = 22;
             button20.Text = "Инверсная ф-ция";
             button20.UseVisualStyleBackColor = true;
+            button20.Click += button20_Click;
             // 
             // button21
             // 
@@ -399,6 +401,7 @@
             button21.TabIndex = 21;
             button21.Text = "Адапт. медианный ф-р.";
             button21.UseVisualStyleBackColor = true;
+            button21.Click += button21_Click;
             // 
             // button22
             // 
@@ -415,6 +418,7 @@
             button22.TabIndex = 20;
             button22.Text = "Среднегеом. ф-р.";
             button22.UseVisualStyleBackColor = true;
+            button22.Click += button22_Click;
             // 
             // button17
             // 
@@ -431,6 +435,7 @@
             button17.TabIndex = 19;
             button17.Text = "Среднеарифм. ф-р.";
             button17.UseVisualStyleBackColor = true;
+            button17.Click += button17_Click;
             // 
             // button18
             // 
@@ -447,6 +452,7 @@
             button18.TabIndex = 18;
             button18.Text = "Медианная ф-ция ";
             button18.UseVisualStyleBackColor = true;
+            button18.Click += button18_Click;
             // 
             // button16
             // 
@@ -490,9 +496,9 @@
             panel4.Controls.Add(button27);
             panel4.Controls.Add(button26);
             panel4.Controls.Add(button25);
-            panel4.Location = new Point(6, 51);
+            panel4.Location = new Point(341, 71);
             panel4.Name = "panel4";
-            panel4.Size = new Size(341, 71);
+            panel4.Size = new Size(380, 277);
             panel4.TabIndex = 15;
             panel4.Visible = false;
             panel4.Paint += panel4_Paint;
@@ -567,9 +573,9 @@
             panel3.BackgroundImageLayout = ImageLayout.Stretch;
             panel3.Controls.Add(button24);
             panel3.Controls.Add(button23);
-            panel3.Location = new Point(3, 87);
+            panel3.Location = new Point(338, 71);
             panel3.Name = "panel3";
-            panel3.Size = new Size(338, 71);
+            panel3.Size = new Size(380, 162);
             panel3.TabIndex = 14;
             panel3.Visible = false;
             // 
@@ -612,8 +618,6 @@
             panel5.Controls.Add(button33);
             panel5.Controls.Add(button32);
             panel5.Controls.Add(button31);
-            panel5.Controls.Add(panel4);
-            panel5.Controls.Add(panel3);
             panel5.Controls.Add(button30);
             panel5.Location = new Point(335, 71);
             panel5.Name = "panel5";
@@ -724,6 +728,8 @@
             Controls.Add(pictureBox2);
             Controls.Add(button29);
             Controls.Add(panel5);
+            Controls.Add(panel3);
+            Controls.Add(panel4);
             Controls.Add(panel1);
             Controls.Add(panel2);
             Controls.Add(button11);
