@@ -68,12 +68,14 @@
             button31 = new Button();
             button30 = new Button();
             button29 = new Button();
+            pictureBox2 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -97,9 +99,9 @@
             // 
             pictureBox1.BackgroundImage = Properties.Resources.rgb;
             pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Location = new Point(961, 548);
+            pictureBox1.Location = new Point(37, 175);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(77, 66);
+            pictureBox1.Size = new Size(252, 225);
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
             // 
@@ -274,7 +276,7 @@
             panel1.Controls.Add(button14);
             panel1.Controls.Add(button12);
             panel1.Controls.Add(button13);
-            panel1.Location = new Point(329, 80);
+            panel1.Location = new Point(360, 71);
             panel1.Name = "panel1";
             panel1.Size = new Size(377, 229);
             panel1.TabIndex = 12;
@@ -375,7 +377,7 @@
             button20.Name = "button20";
             button20.Size = new Size(328, 53);
             button20.TabIndex = 22;
-            button20.Text = "Инверсная фильтрация";
+            button20.Text = "Инверсная ф-ция";
             button20.UseVisualStyleBackColor = true;
             // 
             // button21
@@ -391,7 +393,7 @@
             button21.Name = "button21";
             button21.Size = new Size(328, 53);
             button21.TabIndex = 21;
-            button21.Text = "Адапт. мед. фильтр.";
+            button21.Text = "Адапт. медианный ф-р.";
             button21.UseVisualStyleBackColor = true;
             // 
             // button22
@@ -407,7 +409,7 @@
             button22.Name = "button22";
             button22.Size = new Size(328, 53);
             button22.TabIndex = 20;
-            button22.Text = "Среднегеом. фильтр.";
+            button22.Text = "Среднегеом. ф-р.";
             button22.UseVisualStyleBackColor = true;
             // 
             // button17
@@ -423,7 +425,7 @@
             button17.Name = "button17";
             button17.Size = new Size(328, 53);
             button17.TabIndex = 19;
-            button17.Text = "Среднеарифм. фильтр.";
+            button17.Text = "Среднеарифм. ф-р.";
             button17.UseVisualStyleBackColor = true;
             // 
             // button18
@@ -439,7 +441,7 @@
             button18.Name = "button18";
             button18.Size = new Size(328, 53);
             button18.TabIndex = 18;
-            button18.Text = "Медианная фильтрация ";
+            button18.Text = "Медианная ф-ция ";
             button18.UseVisualStyleBackColor = true;
             // 
             // button16
@@ -473,6 +475,7 @@
             button15.TabIndex = 16;
             button15.Text = "Обычный блюр";
             button15.UseVisualStyleBackColor = true;
+            button15.Click += button15_Click;
             // 
             // panel3
             // 
@@ -480,7 +483,7 @@
             panel3.BackgroundImageLayout = ImageLayout.Stretch;
             panel3.Controls.Add(button24);
             panel3.Controls.Add(button23);
-            panel3.Location = new Point(332, 80);
+            panel3.Location = new Point(338, 71);
             panel3.Name = "panel3";
             panel3.Size = new Size(377, 162);
             panel3.TabIndex = 14;
@@ -526,7 +529,7 @@
             panel4.Controls.Add(button27);
             panel4.Controls.Add(button26);
             panel4.Controls.Add(button25);
-            panel4.Location = new Point(341, 74);
+            panel4.Location = new Point(341, 71);
             panel4.Name = "panel4";
             panel4.Size = new Size(377, 275);
             panel4.TabIndex = 15;
@@ -605,7 +608,7 @@
             panel5.Controls.Add(button32);
             panel5.Controls.Add(button31);
             panel5.Controls.Add(button30);
-            panel5.Location = new Point(338, 77);
+            panel5.Location = new Point(335, 71);
             panel5.Name = "panel5";
             panel5.Size = new Size(377, 283);
             panel5.TabIndex = 16;
@@ -694,6 +697,16 @@
             button29.UseVisualStyleBackColor = true;
             button29.Click += button29_Click;
             // 
+            // pictureBox2
+            // 
+            pictureBox2.BackgroundImage = Properties.Resources.rgb;
+            pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBox2.Location = new Point(55, 421);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(217, 206);
+            pictureBox2.TabIndex = 18;
+            pictureBox2.TabStop = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -701,6 +714,7 @@
             BackgroundImage = Properties.Resources.основа_темной_темы_с_кнопками_вывода_и_загрузки;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1194, 636);
+            Controls.Add(pictureBox2);
             Controls.Add(button29);
             Controls.Add(panel5);
             Controls.Add(panel4);
@@ -728,6 +742,7 @@
             panel3.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
         }
 
@@ -772,5 +787,6 @@
         private Button button32;
         private Button button31;
         private Button button30;
+        private PictureBox pictureBox2;
     }
 }

@@ -2,9 +2,11 @@ namespace CV_Ultra
 {
     public partial class Form1 : Form
     {
+        private Bitmap originalBitmap; //вот это добавила
         public Form1()
         {
             InitializeComponent();
+            pictureBox2.Visible = false; 
         }
 
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -218,6 +220,240 @@ namespace CV_Ultra
 
             return resultBitmap;
         }
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // Шум "Соль и перец"
+        private Bitmap AddSaltAndPepperNoise(Bitmap src, double noiseAmount)
+        {
+            int width = src.Width;
+            int height = src.Height;
+
+            Bitmap result = new Bitmap(src);
+
+            Random rnd = new Random();
+
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    double r = rnd.NextDouble();
+
+                    if (r < noiseAmount / 2.0)
+                    {
+                        result.SetPixel(x, y, Color.Black);
+                    }
+                    else if (r < noiseAmount)
+                    {
+                        result.SetPixel(x, y, Color.White);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        // Гауссов шум
+        // Добавляет к каждому пикселю случайное отклонение,
+        private Bitmap AddGaussianNoise(Bitmap src, double mean, double sigma)
+        {
+            int width = src.Width;
+            int height = src.Height;
+
+            // Создаем новое изображение для результата
+            Bitmap result = new Bitmap(width, height);
+
+            // Генератор случайных чисел
+            Random rnd = new Random();
+
+            // Проходим по всем пикселям изображения
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    // Получаем яркость текущего пикселя
+                    int gray = src.GetPixel(x, y).R;
+
+                    // Генерация случайного числа по нормальному распределению
+                    // Метод Бокса-Мюллера
+                    double u1 = rnd.NextDouble();
+                    double u2 = rnd.NextDouble();
+
+                    double gaussian =
+                        Math.Sqrt(-2.0 * Math.Log(u1)) *
+                        Math.Cos(2.0 * Math.PI * u2);
+
+                    // Добавляем случайное отклонение к яркости пикселя
+                    int newGray = (int)(gray + mean + sigma * gaussian);
+
+                    // Ограничиваем значение диапазоном [0;255]
+                    if (newGray < 0) newGray = 0;
+                    if (newGray > 255) newGray = 255;
+
+                    // Записываем новый пиксель в результирующее изображение
+                    result.SetPixel(
+                        x,
+                        y,
+                        Color.FromArgb(newGray, newGray, newGray)
+                    );
+                }
+            }
+
+            return result;
+        }
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // PSNR 
+        // Показывает насколько сильно обработанное изображение отличается от исходного.
+        private double CalculatePSNR(Bitmap original, Bitmap processed)
+        {
+            // Проверяем совпадение размеров изображений
+            if (original.Width != processed.Width ||
+                original.Height != processed.Height)
+                throw new Exception("Размеры изображений не совпадают");
+
+            // Среднеквадратичная ошибка (MSE)
+            double mse = 0;
+
+            // Проходим по всем пикселям изображения
+            for (int x = 0; x < original.Width; x++)
+            {
+                for (int y = 0; y < original.Height; y++)
+                {
+                    // Получаем яркости пикселей
+                    int p1 = original.GetPixel(x, y).R;
+                    int p2 = processed.GetPixel(x, y).R;
+
+                    // Добавляем квадрат разности яркостей
+                    mse += Math.Pow(p1 - p2, 2);
+                }
+            }
+
+            // Находим среднее значение ошибки
+            mse /= (original.Width * original.Height);
+
+            // Если изображения полностью совпадают
+            if (mse == 0)
+                return double.PositiveInfinity;
+
+            // Вычисляем PSNR по стандартной формуле
+            double psnr = 10 * Math.Log10((255.0 * 255.0) / mse);
+
+            return psnr;
+        }
+
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // SSIM 
+        private double CalculateSSIM(Bitmap img1, Bitmap img2)
+        {
+            // Проверяем размеры изображений
+            if (img1.Width != img2.Width ||
+                img1.Height != img2.Height)
+                throw new Exception("Размеры изображений не совпадают");
+
+            int width = img1.Width;
+            int height = img1.Height;
+
+            // Общее количество пикселей
+            int N = width * height;
+
+            double meanX = 0;
+            double meanY = 0;
+
+            // Вычисляем средние яркости изображений
+
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    meanX += img1.GetPixel(x, y).R;
+                    meanY += img2.GetPixel(x, y).R;
+                }
+            }
+
+            meanX /= N;
+            meanY /= N;
+
+            double varianceX = 0;
+            double varianceY = 0;
+            double covariance = 0;
+
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    double px = img1.GetPixel(x, y).R;
+                    double py = img2.GetPixel(x, y).R;
+
+                    varianceX += Math.Pow(px - meanX, 2);
+                    varianceY += Math.Pow(py - meanY, 2);
+
+                    covariance += (px - meanX) * (py - meanY);
+                }
+            }
+
+            varianceX /= (N - 1);
+            varianceY /= (N - 1);
+            covariance /= (N - 1);
+
+            double C1 = Math.Pow(0.01 * 255, 2);
+            double C2 = Math.Pow(0.03 * 255, 2);
+
+            double numerator =
+                (2 * meanX * meanY + C1) *
+                (2 * covariance + C2);
+
+            double denominator =
+                (meanX * meanX + meanY * meanY + C1) *
+                (varianceX + varianceY + C2);
+
+            return numerator / denominator;
+        }
+
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // Смаз (Motion Blur)
+        private Bitmap ApplyMotionBlur(Bitmap src, int length)
+        {
+            int width = src.Width;
+            int height = src.Height;
+
+            Bitmap result = new Bitmap(width, height);
+
+            // Радиус размытия относительно центрального пикселя
+            int radius = length / 2;
+
+            // Проходим по всему изображению
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int sum = 0;
+                    int count = 0;
+
+                    // Берем соседние пиксели по горизонтали
+                    for (int k = -radius; k <= radius; k++)
+                    {
+                        int px = x + k;
+
+                        // Проверяем выход за границы изображения
+                        if (px >= 0 && px < width)
+                        {
+                            sum += src.GetPixel(px, y).R;
+                            count++;
+                        }
+                    }
+
+                    // Вычисляем среднюю яркость
+                    int gray = sum / count;
+
+                    // Записываем результат
+                    result.SetPixel(
+                        x,
+                        y,
+                        Color.FromArgb(gray, gray, gray)
+                    );
+                }
+            }
+
+            return result;
+        }
 
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -228,6 +464,10 @@ namespace CV_Ultra
             {
                 pictureBox1.BackgroundImage = BlurImage(new Bitmap(pictureBox1.BackgroundImage), 5);
             }
+        }
+        private void button4_Click(object sender, EventArgs e) //вставить изображение в picktureBox1
+        {
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -279,8 +519,14 @@ namespace CV_Ultra
 
         }
 
-        private void button29_Click(object sender, EventArgs e)
+        private void button29_Click(object sender, EventArgs e) // исходное изображение вывод
         {
+            panel1.Visible = false;
+            panel2.Visible = false;
+            panel3.Visible = false;
+            panel4.Visible = false;
+            panel5.Visible = false;
+            pictureBox2.Visible = true;
 
         }
 
@@ -350,6 +596,44 @@ namespace CV_Ultra
             panel3.Visible = false;
             panel4.Visible = false;
             panel5.Visible = false;
+
+            if (pictureBox1.BackgroundImage == null)
+            {
+                MessageBox.Show("Сначала загрузите изображение");
+                return;
+            }
+
+            pictureBox1.BackgroundImage =
+                ApplyMotionBlur(
+                    new Bitmap(pictureBox1.BackgroundImage),
+                    15
+                );
         }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void button23_Click(object sender, EventArgs e)
+        {
+
+            pictureBox1.BackgroundImage =
+                AddSaltAndPepperNoise(
+                    new Bitmap(pictureBox1.BackgroundImage),
+                    0.1
+                );
+        }
+        private void button24_Click(object sender, EventArgs e)
+        {
+
+            pictureBox1.BackgroundImage =
+                AddGaussianNoise(
+                    new Bitmap(pictureBox1.BackgroundImage),
+                    0,
+                    20
+                );
+        }
+
+
     }
 }
