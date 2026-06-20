@@ -6,11 +6,11 @@ namespace CV_Ultra
         public Form1()
         {
             InitializeComponent();
-            pictureBox2.Visible = false; 
+            pictureBox2.Visible = false;
         }
 
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-        // Преобразование изображения
+        //1. Преобразование изображения
         private Bitmap ConvertToGrayscale(Bitmap original)
         {
             // Создаем копию оригинального изображения, чтобы не портить исходник
@@ -106,8 +106,41 @@ namespace CV_Ultra
             return res;
         }
 
+        // Повышение резкости
+        public Bitmap ApplySharpenToGrayscale(Bitmap sourceBitmap, int radius, double sigma, float strength)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+            Bitmap resultBitmap = new Bitmap(width, height);
+
+            // 1. Получаем размытую Гауссом копию, используя твою готовую функцию
+            Bitmap blurredBitmap = ApplyGaussianBlurToGrayscale(sourceBitmap, radius, sigma);
+
+            // 2. Смешиваем оригинал и размытие по формуле резкости
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    // Так как картинка серая, читаем только канал R
+                    int originalGray = sourceBitmap.GetPixel(x, y).R;
+                    int blurredGray = blurredBitmap.GetPixel(x, y).R;
+
+                    // Формула: Оригинал + Сила * (Оригинал - Размытие)
+                    int sharpenedGray = (int)(originalGray + strength * (originalGray - blurredGray));
+
+                    // Жёстко ограничиваем диапазон [0, 255], чтобы не было цветовых артефактов
+                    sharpenedGray = Math.Min(Math.Max(sharpenedGray, 0), 255);
+
+                    // Записываем результат
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(sharpenedGray, sharpenedGray, sharpenedGray));
+                }
+            }
+
+            return resultBitmap;
+        }
+
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-        // Блюр
+        //2.  Блюр
         private Bitmap BlurImage(Bitmap src, int kernelSize)
         {
             int w = src.Width;
@@ -459,11 +492,7 @@ namespace CV_Ultra
 
         private void button1_Click(object sender, EventArgs e)
         {
-            pictureBox1.BackgroundImage = ConvertToGrayscale(new Bitmap(pictureBox1.BackgroundImage));
-            for (int i = 0; i < 10; i++)
-            {
-                pictureBox1.BackgroundImage = BlurImage(new Bitmap(pictureBox1.BackgroundImage), 5);
-            }
+
         }
         private void button4_Click(object sender, EventArgs e) //вставить изображение в picktureBox1
         {
@@ -526,7 +555,8 @@ namespace CV_Ultra
             panel3.Visible = false;
             panel4.Visible = false;
             panel5.Visible = false;
-            pictureBox2.Visible = true;
+            //pictureBox2.Visible = true;
+            pictureBox1.BackgroundImage = pictureBox2.BackgroundImage;
 
         }
 
@@ -597,43 +627,56 @@ namespace CV_Ultra
             panel4.Visible = false;
             panel5.Visible = false;
 
-            if (pictureBox1.BackgroundImage == null)
-            {
-                MessageBox.Show("Сначала загрузите изображение");
-                return;
-            }
-
-            pictureBox1.BackgroundImage =
-                ApplyMotionBlur(
-                    new Bitmap(pictureBox1.BackgroundImage),
-                    15
-                );
+            pictureBox1.BackgroundImage = ApplyMotionBlur(new Bitmap(pictureBox1.BackgroundImage), 15);
         }
 
         private void button15_Click(object sender, EventArgs e)
         {
-
+            pictureBox1.BackgroundImage = BlurImage(new Bitmap(pictureBox1.BackgroundImage), 3);
         }
         private void button23_Click(object sender, EventArgs e)
         {
-
-            pictureBox1.BackgroundImage =
-                AddSaltAndPepperNoise(
-                    new Bitmap(pictureBox1.BackgroundImage),
-                    0.1
-                );
+            pictureBox1.BackgroundImage = AddSaltAndPepperNoise(new Bitmap(pictureBox1.BackgroundImage), 0.1);
         }
         private void button24_Click(object sender, EventArgs e)
         {
-
-            pictureBox1.BackgroundImage =
-                AddGaussianNoise(
-                    new Bitmap(pictureBox1.BackgroundImage),
-                    0,
-                    20
-                );
+            pictureBox1.BackgroundImage = AddGaussianNoise(new Bitmap(pictureBox1.BackgroundImage), 0, 20);
         }
 
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            // Создаем стандартное диалоговое окно Windows для выбора файла
+            OpenFileDialog openDialog = new OpenFileDialog();
 
+            // Показываем только картинки
+            openDialog.Filter = "Изображения (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg|Все файлы (*.*)|*.*";
+
+            if (openDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Загружаем выбранный файл в фоновое изображение
+                pictureBox1.BackgroundImage = new Bitmap(openDialog.FileName);
+                pictureBox2.BackgroundImage = new Bitmap(openDialog.FileName);
+            }
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ConvertToGrayscale(new Bitmap(pictureBox1.BackgroundImage));
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = EqualizeHistogram(new Bitmap(pictureBox1.BackgroundImage));
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplySharpenToGrayscale(new Bitmap(pictureBox1.BackgroundImage), 1, 1.0, 1.5f);
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplyGaussianBlurToGrayscale(new Bitmap(pictureBox1.BackgroundImage), 3, 45);
+        }
     }
 }
