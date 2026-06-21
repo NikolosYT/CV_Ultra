@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             button1 = new Button();
             pictureBox1 = new PictureBox();
@@ -69,6 +70,7 @@
             button30 = new Button();
             button29 = new Button();
             pictureBox2 = new PictureBox();
+            timer1 = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -518,6 +520,7 @@
             button28.TabIndex = 29;
             button28.Text = "Метод Кэнии";
             button28.UseVisualStyleBackColor = true;
+            button28.Click += button28_Click;
             // 
             // button27
             // 
@@ -534,6 +537,7 @@
             button27.TabIndex = 28;
             button27.Text = "Метод Марра-Хилдерта";
             button27.UseVisualStyleBackColor = true;
+            button27.Click += button27_Click;
             // 
             // button26
             // 
@@ -550,6 +554,7 @@
             button26.TabIndex = 27;
             button26.Text = "ф-р Собеля";
             button26.UseVisualStyleBackColor = true;
+            button26.Click += button26_Click;
             // 
             // button25
             // 
@@ -566,6 +571,7 @@
             button25.TabIndex = 26;
             button25.Text = "ф-р Превитта";
             button25.UseVisualStyleBackColor = true;
+            button25.Click += button25_Click;
             // 
             // panel3
             // 
@@ -658,6 +664,7 @@
             button32.TabIndex = 26;
             button32.Text = "С глобальным порогом";
             button32.UseVisualStyleBackColor = true;
+            button32.Click += button32_Click;
             // 
             // button31
             // 
@@ -674,6 +681,7 @@
             button31.TabIndex = 25;
             button31.Text = "Двухпороговая сегм.";
             button31.UseVisualStyleBackColor = true;
+            button31.Click += button31_Click;
             // 
             // button30
             // 
@@ -690,6 +698,7 @@
             button30.TabIndex = 24;
             button30.Text = "Пороговая сегментация";
             button30.UseVisualStyleBackColor = true;
+            button30.Click += button30_Click;
             // 
             // button29
             // 
@@ -717,6 +726,7 @@
             pictureBox2.Size = new Size(217, 206);
             pictureBox2.TabIndex = 18;
             pictureBox2.TabStop = false;
+            // 
             // 
             // Form1
             // 
@@ -799,5 +809,6 @@
         private Button button31;
         private Button button30;
         private PictureBox pictureBox2;
+        private System.Windows.Forms.Timer timer1;
     }
 }

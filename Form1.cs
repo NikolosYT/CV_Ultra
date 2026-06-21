@@ -848,6 +848,532 @@ namespace CV_Ultra
 
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+        // Превитт
+
+        public Bitmap ApplyPrewittEdgeDetection(Bitmap sourceBitmap, int threshold = 50)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+
+            // Создаем новый холст, где разрешено изменять пиксели через SetPixel
+            Bitmap resultBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            // Определение операторов Превитта для расчета градиентов
+            // Ядро Gx (горизонтальные границы)
+            int[,] gx = new int[,] {
+        { -1, 0, 1 },
+        { -1, 0, 1 },
+        { -1, 0, 1 }
+    };
+            // Ядро Gy (вертикальные границы)
+            int[,] gy = new int[,] {
+        { -1, -1, -1 },
+        {  0,  0,  0 },
+        {  1,  1,  1 }
+    };
+
+            int radius = 1; // Радиус окна свертки (3x3)
+
+            for (int y = radius; y < height - radius; y++)
+            {
+                for (int x = radius; x < width - radius; x++)
+                {
+                    float sumX = 0;
+                    float sumY = 0;
+
+                    // Применение операторов Превитта к текущему окну пикселей
+                    for (int ky = -radius; ky <= radius; ky++)
+                    {
+                        for (int kx = -radius; kx <= radius; kx++)
+                        {
+                            // Берем яркость исходного пикселя (канал R)
+                            int grayValue = sourceBitmap.GetPixel(x + kx, y + ky).R;
+
+                            // Умножаем на весовые коэффициенты ядер Превитта
+                            sumX += grayValue * gx[ky + radius, kx + radius];
+                            sumY += grayValue * gy[ky + radius, kx + radius];
+                        }
+                    }
+
+                    // Расчет общей величины градиента (максимальный из двух)
+                    int finalGradient = (int)Math.Sqrt(sumX * sumX + sumY * sumY);
+
+                    // Ограничение диапазона [0, 255] и бинаризация по порогу
+                    int finalColor = finalGradient >= threshold ? 255 : 0;
+
+                    // Записываем результат (Alpha = 255, чтобы картинка не была прозрачной)
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(255, finalColor, finalColor, finalColor));
+                }
+            }
+
+            return resultBitmap;
+        }
+
+        // Собель
+
+        public Bitmap ApplySobelEdgeDetection(Bitmap sourceBitmap, int threshold = 50)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+
+            // Создаем новый 32-битный холст
+            Bitmap resultBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            // Матрицы Собеля (обрати внимание на двойки по центру)
+            int[,] gx = new int[,] {
+        { -1, 0, 1 },
+        { -2, 0, 2 },
+        { -1, 0, 1 }
+    };
+
+            int[,] gy = new int[,] {
+        { -1, -2, -1 },
+        {  0,  0,  0 },
+        {  1,  2,  1 }
+    };
+
+            int radius = 1;
+
+            for (int y = radius; y < height - radius; y++)
+            {
+                for (int x = radius; x < width - radius; x++)
+                {
+                    float sumX = 0;
+                    float sumY = 0;
+
+                    // Свертка окна 3х3
+                    for (int ky = -radius; ky <= radius; ky++)
+                    {
+                        for (int kx = -radius; kx <= radius; kx++)
+                        {
+                            int grayValue = sourceBitmap.GetPixel(x + kx, y + ky).R;
+
+                            sumX += grayValue * gx[ky + radius, kx + radius];
+                            sumY += grayValue * gy[ky + radius, kx + radius];
+                        }
+                    }
+
+                    // Вычисляем длину вектора градиента
+                    int finalGradient = (int)Math.Sqrt(sumX * sumX + sumY * sumY);
+
+                    // Бинаризация контуров по порогу
+                    int finalColor = finalGradient >= threshold ? 255 : 0;
+
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(255, finalColor, finalColor, finalColor));
+                }
+            }
+
+            return resultBitmap;
+        }
+
+        // Марра-Хилдерта
+
+        public Bitmap ApplyMarrHildrethEdgeDetection(Bitmap sourceBitmap, int threshold = 4)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+
+            // Создаем новый 32-битный холст
+            Bitmap resultBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            // Дискретное ядро Лапласиана Гауссиана (LoG) 5x5 для хорошего сглаживания и контуров
+            int[,] logKernel = new int[,] {
+        {  0,  0, -1,  0,  0 },
+        {  0, -1, -2, -1,  0 },
+        { -1, -2, 16, -2, -1 },
+        {  0, -1, -2, -1,  0 },
+        {  0,  0, -1,  0,  0 }
+    };
+
+            int radius = 2; // Так как размер матрицы 5x5
+            int[,] laplacianMap = new int[width, height];
+
+            // Шаг 1: Проходим по картинке и строим карту Лапласиана
+            for (int y = radius; y < height - radius; y++)
+            {
+                for (int x = radius; x < width - radius; x++)
+                {
+                    int sum = 0;
+
+                    for (int ky = -radius; ky <= radius; ky++)
+                    {
+                        for (int kx = -radius; kx <= radius; kx++)
+                        {
+                            int grayValue = sourceBitmap.GetPixel(x + kx, y + ky).R;
+                            sum += grayValue * logKernel[ky + radius, kx + radius];
+                        }
+                    }
+                    laplacianMap[x, y] = sum;
+                }
+            }
+
+            // Шаг 2: Ищем переходы через ноль (Zero-Crossings)
+            for (int y = radius + 1; y < height - radius - 1; y++)
+            {
+                for (int x = radius + 1; x < width - radius - 1; x++)
+                {
+                    bool isEdge = false;
+
+                    // Проверяем противоположных соседей на смену знака (горизонталь, вертикаль, диагонали)
+                    int center = laplacianMap[x, y];
+
+                    if ((laplacianMap[x - 1, y] * laplacianMap[x + 1, y] < 0 && Math.Abs(laplacianMap[x - 1, y] - laplacianMap[x + 1, y]) >= threshold) ||
+                        (laplacianMap[x, y - 1] * laplacianMap[x, y + 1] < 0 && Math.Abs(laplacianMap[x, y - 1] - laplacianMap[x, y + 1]) >= threshold) ||
+                        (laplacianMap[x - 1, y - 1] * laplacianMap[x + 1, y + 1] < 0 && Math.Abs(laplacianMap[x - 1, y - 1] - laplacianMap[x + 1, y + 1]) >= threshold) ||
+                        (laplacianMap[x + 1, y - 1] * laplacianMap[x - 1, y + 1] < 0 && Math.Abs(laplacianMap[x + 1, y - 1] - laplacianMap[x - 1, y + 1]) >= threshold))
+                    {
+                        isEdge = true;
+                    }
+
+                    int finalColor = isEdge ? 255 : 0;
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(255, finalColor, finalColor, finalColor));
+                }
+            }
+
+            return resultBitmap;
+        }
+
+        // Кэнни 
+
+        public Bitmap ApplyCannyEdgeDetection(Bitmap sourceBitmap, int lowThreshold = 20, int highThreshold = 60)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+
+            // 1. Сглаживание по Гауссу (простая матрица 3х3 для экономии кода)
+            int[,] gaussianKernel = { { 1, 2, 1 }, { 2, 4, 2 }, { 1, 2, 1 } };
+            int[,] blurred = new int[width, height];
+
+            for (int y = 1; y < height - 1; y++)
+            {
+                for (int x = 1; x < width - 1; x++)
+                {
+                    int sum = 0;
+                    for (int ky = -1; ky <= 1; ky++)
+                        for (int kx = -1; kx <= 1; kx++)
+                            sum += sourceBitmap.GetPixel(x + kx, y + ky).R * gaussianKernel[ky + 1, kx + 1];
+                    blurred[x, y] = sum / 16;
+                }
+            }
+
+            // 2. Расчет градиентов и направлений (Оператор Собеля)
+            int[,] gx = { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
+            int[,] gy = { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } };
+
+            int[,] gradientMag = new int[width, height];
+            double[,] gradientAngle = new double[width, height];
+
+            for (int y = 1; y < height - 1; y++)
+            {
+                for (int x = 1; x < width - 1; x++)
+                {
+                    double sumX = 0, sumY = 0;
+                    for (int ky = -1; ky <= 1; ky++)
+                    {
+                        for (int kx = -1; kx <= 1; kx++)
+                        {
+                            int val = blurred[x + kx, y + ky];
+                            sumX += val * gx[ky + 1, kx + 1];
+                            sumY += val * gy[ky + 1, kx + 1];
+                        }
+                    }
+                    gradientMag[x, y] = (int)Math.Sqrt(sumX * sumX + sumY * sumY);
+                    gradientAngle[x, y] = Math.Atan2(sumY, sumX) * (180.0 / Math.PI);
+                }
+            }
+
+            // 3. Подавление не-максимумов (Non-Maximum Suppression)
+            int[,] nms = new int[width, height];
+            for (int y = 1; y < height - 1; y++)
+            {
+                for (int x = 1; x < width - 1; x++)
+                {
+                    double angle = gradientAngle[x, y];
+                    if (angle < 0) angle += 180;
+
+                    int q = 255, r = 255;
+
+                    // Округляем угол до 0, 45, 90 или 135 градусов
+                    if ((angle >= 0 && angle < 22.5) || (angle >= 157.5 && angle <= 180))
+                    {
+                        q = gradientMag[x + 1, y];
+                        r = gradientMag[x - 1, y];
+                    }
+                    else if (angle >= 22.5 && angle < 67.5)
+                    {
+                        q = gradientMag[x + 1, y + 1];
+                        r = gradientMag[x - 1, y - 1];
+                    }
+                    else if (angle >= 67.5 && angle < 112.5)
+                    {
+                        q = gradientMag[x, y + 1];
+                        r = gradientMag[x, y - 1];
+                    }
+                    else if (angle >= 112.5 && angle < 157.5)
+                    {
+                        q = gradientMag[x - 1, y + 1];
+                        r = gradientMag[x + 1, y - 1];
+                    }
+
+                    // Оставляем только пики градиента
+                    if (gradientMag[x, y] >= q && gradientMag[x, y] >= r)
+                        nms[x, y] = gradientMag[x, y];
+                    else
+                        nms[x, y] = 0;
+                }
+            }
+
+            // 4 и 5. Двупороговая фильтрация и Трассировка (Двойной проход)
+            Bitmap resultBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            for (int y = 1; y < height - 1; y++)
+            {
+                for (int x = 1; x < width - 1; x++)
+                {
+                    int color = 0;
+                    if (nms[x, y] >= highThreshold)
+                    {
+                        color = 255; // Сильный контур
+                    }
+                    else if (nms[x, y] >= lowThreshold)
+                    {
+                        // Проверяем 8 соседей на связь с сильным контуром
+                        if (nms[x - 1, y - 1] >= highThreshold || nms[x, y - 1] >= highThreshold || nms[x + 1, y - 1] >= highThreshold ||
+                            nms[x - 1, y] >= highThreshold || nms[x + 1, y] >= highThreshold ||
+                            nms[x - 1, y + 1] >= highThreshold || nms[x, y + 1] >= highThreshold || nms[x + 1, y + 1] >= highThreshold)
+                        {
+                            color = 255;
+                        }
+                    }
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(255, color, color, color));
+                }
+            }
+
+            return resultBitmap;
+        }
+
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        // Пороговая сегментация
+        public Bitmap ApplyThresholdSegmentation(Bitmap sourceBitmap, int threshold)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+
+            // Создаем новый холст, где разрешено изменять пиксели через SetPixel
+            Bitmap resultBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    // Берем яркость исходного пикселя (канал R)
+                    int grayValue = sourceBitmap.GetPixel(x, y).R;
+
+                    // Бинаризация: сравниваем с порогом
+                    int finalColor = (grayValue >= threshold) ? 255 : 0;
+
+                    // Записываем результат (Alpha = 255, чтобы картинка не была прозрачной)
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(255, finalColor, finalColor, finalColor));
+                }
+            }
+
+            return resultBitmap;
+        }
+
+        // Двухпороговая сегментация
+
+        public Bitmap ApplyDoubleThresholdSegmentation(Bitmap sourceBitmap, int lowThreshold, int highThreshold)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+
+            // Создаем независимый 32-битный холст
+            Bitmap resultBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    // Читаем яркость пикселя
+                    int grayValue = sourceBitmap.GetPixel(x, y).R;
+
+                    int finalColor;
+
+                    // Проверяем попадание в диапазон [lowThreshold, highThreshold]
+                    if (grayValue >= lowThreshold && grayValue <= highThreshold)
+                    {
+                        finalColor = 255; // Объект интереса
+                    }
+                    else
+                    {
+                        finalColor = 0;   // Фон
+                    }
+
+                    // Записываем пиксель
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(255, finalColor, finalColor, finalColor));
+                }
+            }
+
+            return resultBitmap;
+        }
+
+        // Глобальный порог
+        public Bitmap ApplyGlobalThresholdSegmentation(Bitmap sourceBitmap, double epsilon = 0.5)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+
+            // Шаг 1. Находим начальный порог как среднюю яркость всего изображения
+            double currentThreshold = 0;
+            long totalPixels = width * height;
+            long brightnessSum = 0;
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    brightnessSum += sourceBitmap.GetPixel(x, y).R;
+                }
+            }
+            currentThreshold = (double)brightnessSum / totalPixels;
+
+            bool isConverged = false;
+
+            // Цикл итерационного поиска оптимального порога
+            while (!isConverged)
+            {
+                double sum1 = 0, sum2 = 0;
+                int count1 = 0, count2 = 0;
+
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
+                    {
+                        int gray = sourceBitmap.GetPixel(x, y).R;
+
+                        if (gray <= currentThreshold)
+                        {
+                            sum1 += gray;
+                            count1++;
+                        }
+                        else
+                        {
+                            sum2 += gray;
+                            count2++;
+                        }
+                    }
+                }
+
+                // Вычисляем средние значения для двух классов
+                double mu1 = (count1 > 0) ? (sum1 / count1) : 0;
+                double mu2 = (count2 > 0) ? (sum2 / count2) : 0;
+
+                // Новый порог — это среднее арифметическое двух средних
+                double nextThreshold = (mu1 + mu2) / 2.0;
+
+                // Если порог перестал сильно меняться, останавливаемся
+                if (Math.Abs(nextThreshold - currentThreshold) < epsilon)
+                {
+                    isConverged = true;
+                }
+
+                currentThreshold = nextThreshold;
+            }
+
+            // Шаг 2. Бинаризация изображения по найденному порогу
+            Bitmap resultBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            int finalThreshold = (int)currentThreshold;
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int grayValue = sourceBitmap.GetPixel(x, y).R;
+                    int finalColor = (grayValue >= finalThreshold) ? 255 : 0;
+
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(255, finalColor, finalColor, finalColor));
+                }
+            }
+
+            return resultBitmap;
+        }
+
+        // Оцу
+        public Bitmap ApplyOtsuThresholdSegmentation(Bitmap sourceBitmap)
+        {
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
+            int totalPixels = width * height;
+
+            // 1. Строим гистограмму (считаем количество пикселей для каждого уровня яркости от 0 до 255)
+            int[] histogram = new int[256];
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int gray = sourceBitmap.GetPixel(x, y).R;
+                    histogram[gray]++;
+                }
+            }
+
+            // Считаем общую сумму яркостей для быстрого вычисления среднего значения класса 2
+            double totalBrightnessSum = 0;
+            for (int i = 0; i < 256; i++)
+            {
+                totalBrightnessSum += i * histogram[i];
+            }
+
+            double currentBrightnessSumB = 0;
+            long weightB = 0; // Вес (количество пикселей) первого класса (background)
+
+            double maxVariance = 0;
+            int bestThreshold = 0;
+
+            // 2. Ищем порог, максимизирующий межклассовую дисперсию
+            for (int t = 0; t < 256; t++)
+            {
+                weightB += histogram[t];
+                if (weightB == 0) continue;
+
+                long weightF = totalPixels - weightB; // Вес второго класса (foreground)
+                if (weightF == 0) break;
+
+                currentBrightnessSumB += (double)(t * histogram[t]);
+                double currentBrightnessSumF = totalBrightnessSum - currentBrightnessSumB;
+
+                // Средние значения яркости для обоих классов
+                double muB = currentBrightnessSumB / weightB;
+                double muF = currentBrightnessSumF / weightF;
+
+                // Формула межклассовой дисперсии Оцу
+                double varianceBetween = (double)weightB * (double)weightF * (muB - muF) * (muB - muF);
+
+                // Если нашли дисперсию больше прежней — запоминаем этот порог
+                if (varianceBetween > maxVariance)
+                {
+                    maxVariance = varianceBetween;
+                    bestThreshold = t;
+                }
+            }
+
+            // 3. Бинаризация по найденному оптимальному порогу Оцу
+            Bitmap resultBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int grayValue = sourceBitmap.GetPixel(x, y).R;
+                    int finalColor = (grayValue >= bestThreshold) ? 255 : 0;
+
+                    resultBitmap.SetPixel(x, y, Color.FromArgb(255, finalColor, finalColor, finalColor));
+                }
+            }
+
+            return resultBitmap;
+        }
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -903,7 +1429,7 @@ namespace CV_Ultra
 
         private void button33_Click(object sender, EventArgs e)
         {
-
+            pictureBox1.BackgroundImage = ApplyOtsuThresholdSegmentation(new Bitmap(pictureBox1.BackgroundImage));
         }
 
         private void button29_Click(object sender, EventArgs e) // исходное изображение вывод
@@ -1065,6 +1591,41 @@ namespace CV_Ultra
         private void button19_Click(object sender, EventArgs e)
         {
             pictureBox1.BackgroundImage = ApplyRichardsonLucyFilter(new Bitmap(pictureBox1.BackgroundImage), 5);
+        }
+
+        private void button30_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplyThresholdSegmentation(new Bitmap(pictureBox1.BackgroundImage), 128);
+        }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplyDoubleThresholdSegmentation(new Bitmap(pictureBox1.BackgroundImage), 50, 180);
+        }
+
+        private void button32_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplyGlobalThresholdSegmentation(new Bitmap(pictureBox1.BackgroundImage));
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplyPrewittEdgeDetection(new Bitmap(pictureBox1.BackgroundImage));
+        }
+
+        private void button26_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplySobelEdgeDetection(new Bitmap(pictureBox1.BackgroundImage));
+        }
+
+        private void button27_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplyMarrHildrethEdgeDetection(new Bitmap(pictureBox1.BackgroundImage));
+        }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplyCannyEdgeDetection(new Bitmap(pictureBox1.BackgroundImage));
         }
     }
 }
