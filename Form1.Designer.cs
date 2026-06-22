@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             button1 = new Button();
             pictureBox1 = new PictureBox();
@@ -70,7 +69,6 @@
             button30 = new Button();
             button29 = new Button();
             pictureBox2 = new PictureBox();
-            timer1 = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -727,7 +725,6 @@
             pictureBox2.TabIndex = 18;
             pictureBox2.TabStop = false;
             // 
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -809,6 +806,5 @@
         private Button button31;
         private Button button30;
         private PictureBox pictureBox2;
-        private System.Windows.Forms.Timer timer1;
     }
 }
