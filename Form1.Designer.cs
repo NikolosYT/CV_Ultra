@@ -69,6 +69,8 @@
             button30 = new Button();
             button29 = new Button();
             pictureBox2 = new PictureBox();
+            button34 = new Button();
+            pictureBox3 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -76,6 +78,7 @@
             panel3.SuspendLayout();
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -725,13 +728,41 @@
             pictureBox2.TabIndex = 18;
             pictureBox2.TabStop = false;
             // 
+            // button34
+            // 
+            button34.BackgroundImage = Properties.Resources.кнопкааватар_темная;
+            button34.BackgroundImageLayout = ImageLayout.Stretch;
+            button34.Cursor = Cursors.Hand;
+            button34.FlatAppearance.BorderSize = 0;
+            button34.FlatStyle = FlatStyle.Flat;
+            button34.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button34.ForeColor = Color.PaleVioletRed;
+            button34.Location = new Point(1086, 3);
+            button34.Name = "button34";
+            button34.Size = new Size(96, 49);
+            button34.TabIndex = 19;
+            button34.UseVisualStyleBackColor = true;
+            button34.Click += button34_Click;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.BackgroundImage = Properties.Resources.аккаунт_темный;
+            pictureBox3.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBox3.Location = new Point(817, 58);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(332, 504);
+            pictureBox3.TabIndex = 20;
+            pictureBox3.TabStop = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = Properties.Resources.основа_темной_темы_с_кнопками_вывода_и_загрузки;
+            BackgroundImage = Properties.Resources.заменатемнаяоснова;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1194, 636);
+            Controls.Add(pictureBox3);
+            Controls.Add(button34);
             Controls.Add(pictureBox2);
             Controls.Add(button29);
             Controls.Add(panel5);
@@ -761,6 +792,7 @@
             panel3.ResumeLayout(false);
             panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ResumeLayout(false);
         }
 
@@ -806,5 +838,7 @@
         private Button button31;
         private Button button30;
         private PictureBox pictureBox2;
+        private Button button34;
+        private PictureBox pictureBox3;
     }
 }

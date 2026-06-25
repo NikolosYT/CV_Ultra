@@ -7,6 +7,7 @@ namespace CV_Ultra
         {
             InitializeComponent();
             pictureBox2.Visible = false;
+            pictureBox3.Visible = false;
         }
 
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1383,9 +1384,10 @@ namespace CV_Ultra
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e) // светла€ тема
         {
-            this.BackgroundImage = Properties.Resources.светла€;
+            this.BackgroundImage = Properties.Resources.заменасветла€осова;
+            pictureBox3.BackgroundImage = Properties.Resources.аккаунт_светлый;
             button1.BackgroundImage = Properties.Resources.кнопкасветкрасиво;
             button2.BackgroundImage = Properties.Resources.лунасвет;
             button3.BackgroundImage = Properties.Resources.солнцесвет;
@@ -1398,11 +1400,39 @@ namespace CV_Ultra
             button10.BackgroundImage = Properties.Resources.светбольша€;
             button11.BackgroundImage = Properties.Resources.светбольша€;
             button29.BackgroundImage = Properties.Resources.кнопкасветкрасиво;
+            button34.BackgroundImage = Properties.Resources.кнопкааватар_светла€;
+            panel1.BackgroundImage = Properties.Resources.триокна_св;
+            panel2.BackgroundImage = Properties.Resources.окнооснова_безкнопок;
+            panel3.BackgroundImage = Properties.Resources.дваокна_св;
+            panel4.BackgroundImage = Properties.Resources.четыреокна_св;
+            panel5.BackgroundImage = Properties.Resources.четыреокна_св;
+            button12.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button13.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button14.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button15.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button16.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button17.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button18.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button19.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button20.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button21.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button22.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button23.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button24.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button25.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button26.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button27.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button28.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button30.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button31.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button32.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
+            button33.BackgroundImage = Properties.Resources.кнопкасветла€_основа;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) // темна€ тема
         {
-            this.BackgroundImage = Properties.Resources.основа_темной_темы_с_кнопками_вывода_и_загрузки;
+            this.BackgroundImage = Properties.Resources.заменатемна€основа;
+            pictureBox3.BackgroundImage = Properties.Resources.аккаунт_темный;
             button1.BackgroundImage = Properties.Resources.черное;
             button2.BackgroundImage = Properties.Resources.черниии;
             button3.BackgroundImage = Properties.Resources.кнопка_светли;
@@ -1415,6 +1445,33 @@ namespace CV_Ultra
             button10.BackgroundImage = Properties.Resources.черное2;
             button11.BackgroundImage = Properties.Resources.черное2;
             button29.BackgroundImage = Properties.Resources.черное;
+            button34.BackgroundImage = Properties.Resources.кнопкааватар_темна€;
+            panel1.BackgroundImage = Properties.Resources.преобораз;
+            panel2.BackgroundImage = Properties.Resources.пустоеокно;
+            panel3.BackgroundImage = Properties.Resources.дваокна;
+            panel4.BackgroundImage = Properties.Resources.четвокна;
+            panel5.BackgroundImage = Properties.Resources.четвокна;
+            button12.BackgroundImage = Properties.Resources.черное2;
+            button13.BackgroundImage = Properties.Resources.черное2;
+            button14.BackgroundImage = Properties.Resources.черное2;
+            button15.BackgroundImage = Properties.Resources.черное2;
+            button16.BackgroundImage = Properties.Resources.черное2;
+            button17.BackgroundImage = Properties.Resources.черное2;
+            button18.BackgroundImage = Properties.Resources.черное2;
+            button19.BackgroundImage = Properties.Resources.черное2;
+            button20.BackgroundImage = Properties.Resources.черное2;
+            button21.BackgroundImage = Properties.Resources.черное2;
+            button22.BackgroundImage = Properties.Resources.черное2;
+            button23.BackgroundImage = Properties.Resources.черное2;
+            button24.BackgroundImage = Properties.Resources.черное2;
+            button25.BackgroundImage = Properties.Resources.черное2;
+            button26.BackgroundImage = Properties.Resources.черное2;
+            button27.BackgroundImage = Properties.Resources.черное2;
+            button28.BackgroundImage = Properties.Resources.черное2;
+            button30.BackgroundImage = Properties.Resources.черное2;
+            button31.BackgroundImage = Properties.Resources.черное2;
+            button32.BackgroundImage = Properties.Resources.черное2;
+            button33.BackgroundImage = Properties.Resources.черное2;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -1626,6 +1683,13 @@ namespace CV_Ultra
         private void button28_Click(object sender, EventArgs e)
         {
             pictureBox1.BackgroundImage = ApplyCannyEdgeDetection(new Bitmap(pictureBox1.BackgroundImage));
+        }
+
+        private void button34_Click(object sender, EventArgs e)
+        {
+            pictureBox3.Visible = !pictureBox3.Visible;
+
+
         }
     }
 }
