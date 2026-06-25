@@ -133,6 +133,26 @@ namespace CV_Ultra.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap кнопка_отакка_свет {
+            get {
+                object obj = ResourceManager.GetObject("кнопка_отакка_свет", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap кнопка_отакка_темн {
+            get {
+                object obj = ResourceManager.GetObject("кнопка_отакка_темн", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap кнопка_светли {
             get {
                 object obj = ResourceManager.GetObject("кнопка светли", resourceCulture);
@@ -196,6 +216,26 @@ namespace CV_Ultra.Properties {
         public static System.Drawing.Bitmap лунасвет {
             get {
                 object obj = ResourceManager.GetObject("лунасвет", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap настройки_свет {
+            get {
+                object obj = ResourceManager.GetObject("настройки_свет", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap настройки_темн {
+            get {
+                object obj = ResourceManager.GetObject("настройки_темн", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -71,6 +71,10 @@
             pictureBox2 = new PictureBox();
             button34 = new Button();
             pictureBox3 = new PictureBox();
+            button35 = new Button();
+            button36 = new Button();
+            button37 = new Button();
+            button38 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -748,11 +752,74 @@
             // 
             pictureBox3.BackgroundImage = Properties.Resources.аккаунт_темный;
             pictureBox3.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox3.Location = new Point(817, 58);
+            pictureBox3.Location = new Point(811, 58);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(332, 504);
             pictureBox3.TabIndex = 20;
             pictureBox3.TabStop = false;
+            // 
+            // button35
+            // 
+            button35.BackgroundImage = Properties.Resources.кнопка_отакка_темн;
+            button35.BackgroundImageLayout = ImageLayout.Stretch;
+            button35.Cursor = Cursors.Hand;
+            button35.FlatAppearance.BorderSize = 0;
+            button35.FlatStyle = FlatStyle.Flat;
+            button35.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button35.ForeColor = Color.PaleVioletRed;
+            button35.Location = new Point(853, 246);
+            button35.Name = "button35";
+            button35.Size = new Size(244, 41);
+            button35.TabIndex = 25;
+            button35.Text = "Войти в аккаунт";
+            button35.UseVisualStyleBackColor = true;
+            // 
+            // button36
+            // 
+            button36.BackgroundImage = Properties.Resources.кнопка_отакка_темн;
+            button36.BackgroundImageLayout = ImageLayout.Stretch;
+            button36.Cursor = Cursors.Hand;
+            button36.FlatAppearance.BorderSize = 0;
+            button36.FlatStyle = FlatStyle.Flat;
+            button36.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button36.ForeColor = Color.PaleVioletRed;
+            button36.Location = new Point(853, 290);
+            button36.Name = "button36";
+            button36.Size = new Size(244, 41);
+            button36.TabIndex = 26;
+            button36.Text = "+ аккаунт";
+            button36.UseVisualStyleBackColor = true;
+            // 
+            // button37
+            // 
+            button37.BackgroundImage = Properties.Resources.кнопка_отакка_темн;
+            button37.BackgroundImageLayout = ImageLayout.Stretch;
+            button37.Cursor = Cursors.Hand;
+            button37.FlatAppearance.BorderSize = 0;
+            button37.FlatStyle = FlatStyle.Flat;
+            button37.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button37.ForeColor = Color.PaleVioletRed;
+            button37.Location = new Point(853, 335);
+            button37.Name = "button37";
+            button37.Size = new Size(244, 41);
+            button37.TabIndex = 27;
+            button37.Text = "Выйти";
+            button37.UseVisualStyleBackColor = true;
+            // 
+            // button38
+            // 
+            button38.BackgroundImage = Properties.Resources.настройки_темн;
+            button38.BackgroundImageLayout = ImageLayout.Stretch;
+            button38.Cursor = Cursors.Hand;
+            button38.FlatAppearance.BorderSize = 0;
+            button38.FlatStyle = FlatStyle.Flat;
+            button38.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button38.ForeColor = Color.PaleVioletRed;
+            button38.Location = new Point(853, 388);
+            button38.Name = "button38";
+            button38.Size = new Size(46, 47);
+            button38.TabIndex = 28;
+            button38.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -761,6 +828,10 @@
             BackgroundImage = Properties.Resources.заменатемнаяоснова;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1194, 636);
+            Controls.Add(button38);
+            Controls.Add(button37);
+            Controls.Add(button36);
+            Controls.Add(button35);
             Controls.Add(pictureBox3);
             Controls.Add(button34);
             Controls.Add(pictureBox2);
@@ -840,5 +911,9 @@
         private PictureBox pictureBox2;
         private Button button34;
         private PictureBox pictureBox3;
+        private Button button35;
+        private Button button36;
+        private Button button37;
+        private Button button38;
     }
 }

@@ -8,6 +8,10 @@ namespace CV_Ultra
             InitializeComponent();
             pictureBox2.Visible = false;
             pictureBox3.Visible = false;
+            button35.Visible = false;
+            button36.Visible = false;
+            button37.Visible = false;
+            button38.Visible = false;
         }
 
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1401,6 +1405,9 @@ namespace CV_Ultra
             button11.BackgroundImage = Properties.Resources.светбольшая;
             button29.BackgroundImage = Properties.Resources.кнопкасветкрасиво;
             button34.BackgroundImage = Properties.Resources.кнопкааватар_светлая;
+            button35.BackgroundImage = Properties.Resources.кнопка_отакка_свет;
+            button36.BackgroundImage = Properties.Resources.кнопка_отакка_свет;
+            button37.BackgroundImage = Properties.Resources.кнопка_отакка_свет;
             panel1.BackgroundImage = Properties.Resources.триокна_св;
             panel2.BackgroundImage = Properties.Resources.окнооснова_безкнопок;
             panel3.BackgroundImage = Properties.Resources.дваокна_св;
@@ -1427,6 +1434,7 @@ namespace CV_Ultra
             button31.BackgroundImage = Properties.Resources.кнопкасветлая_основа;
             button32.BackgroundImage = Properties.Resources.кнопкасветлая_основа;
             button33.BackgroundImage = Properties.Resources.кнопкасветлая_основа;
+            button38.BackgroundImage = Properties.Resources.настройки_свет;
         }
 
         private void button2_Click(object sender, EventArgs e) // темная тема
@@ -1446,6 +1454,9 @@ namespace CV_Ultra
             button11.BackgroundImage = Properties.Resources.черное2;
             button29.BackgroundImage = Properties.Resources.черное;
             button34.BackgroundImage = Properties.Resources.кнопкааватар_темная;
+            button35.BackgroundImage = Properties.Resources.кнопка_отакка_темн;
+            button36.BackgroundImage = Properties.Resources.кнопка_отакка_темн;
+            button37.BackgroundImage = Properties.Resources.кнопка_отакка_темн;
             panel1.BackgroundImage = Properties.Resources.преобораз;
             panel2.BackgroundImage = Properties.Resources.пустоеокно;
             panel3.BackgroundImage = Properties.Resources.дваокна;
@@ -1472,6 +1483,7 @@ namespace CV_Ultra
             button31.BackgroundImage = Properties.Resources.черное2;
             button32.BackgroundImage = Properties.Resources.черное2;
             button33.BackgroundImage = Properties.Resources.черное2;
+            button38.BackgroundImage = Properties.Resources.настройки_темн;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -1503,7 +1515,7 @@ namespace CV_Ultra
 
         private void button5_Click(object sender, EventArgs e)
         {
-            panel1.Visible = true;
+            panel1.Visible = !panel1.Visible;
             panel2.Visible = false;
             panel3.Visible = false;
             panel4.Visible = false;
@@ -1518,7 +1530,7 @@ namespace CV_Ultra
         private void button6_Click(object sender, EventArgs e)
         {
             panel1.Visible = false;
-            panel2.Visible = true;
+            panel2.Visible = !panel2.Visible;
             panel3.Visible = false;
             panel4.Visible = false;
             panel5.Visible = false;
@@ -1528,7 +1540,7 @@ namespace CV_Ultra
         {
             panel1.Visible = false;
             panel2.Visible = false;
-            panel3.Visible = true;
+            panel3.Visible = !panel3.Visible;
             panel4.Visible = false;
             panel5.Visible = false;
         }
@@ -1538,7 +1550,7 @@ namespace CV_Ultra
             panel1.Visible = false;
             panel2.Visible = false;
             panel3.Visible = false;
-            panel4.Visible = true;
+            panel4.Visible = !panel4.Visible;
             panel5.Visible = false;
         }
 
@@ -1548,7 +1560,7 @@ namespace CV_Ultra
             panel2.Visible = false;
             panel3.Visible = false;
             panel4.Visible = false;
-            panel5.Visible = true;
+            panel5.Visible = !panel5.Visible;
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -1688,7 +1700,10 @@ namespace CV_Ultra
         private void button34_Click(object sender, EventArgs e)
         {
             pictureBox3.Visible = !pictureBox3.Visible;
-
+            button35.Visible = !button35.Visible;
+            button36.Visible = !button36.Visible;
+            button37.Visible = !button37.Visible;
+            button38.Visible = !button38.Visible;
 
         }
     }
