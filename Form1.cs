@@ -2,6 +2,7 @@ namespace CV_Ultra
 {
     public partial class Form1 : Form
     {
+        private Random _random = new Random(); //какой ужас
         private Bitmap originalBitmap; //вот это добавила
         public Form1()
         {
@@ -626,30 +627,32 @@ namespace CV_Ultra
             int width = sourceBitmap.Width;
             int height = sourceBitmap.Height;
 
-            // ГАРАНТИЯ РАБОТЫ: Создаем холст в стандартном 32-битном формате, где SetPixel разрешен
+            // 1. ПРИНУДИТЕЛЬНО создаем новый холст в 32-битном формате (это критично!)
             Bitmap resultBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-            // Честно копируем графику оригинала на новый холст
+            // 2. Копируем исходное изображение на новый холст
             using (Graphics g = Graphics.FromImage(resultBitmap))
             {
                 g.DrawImage(sourceBitmap, 0, 0, width, height);
             }
 
-            Random rand = new Random();
+            // 3. Генерируем шум
             int totalPixels = width * height;
-
-            // Внимание: percentage передавать как целое число (например, 10 для 10%)
             int noisePixelsCount = (int)(totalPixels * (percentage / 100.0));
+
+            // Защита от деления на ноль или слишком малого количества
+            if (noisePixelsCount == 0) return resultBitmap;
 
             for (int i = 0; i < noisePixelsCount; i++)
             {
-                int x = rand.Next(0, width);
-                int y = rand.Next(0, height);
+                // Используем ОБЩИЙ _random, а не создаем новый внутри!
+                int x = _random.Next(0, width);
+                int y = _random.Next(0, height);
 
                 // 0 - черный (перец), 255 - белый (соль)
-                int noiseColor = rand.Next(0, 2) == 0 ? 0 : 255;
+                int noiseColor = _random.Next(0, 2) == 0 ? 0 : 255;
 
-                // Явно передаем Alpha = 255, чтобы пиксель не стал прозрачным
+                // Устанавливаем пиксель (Alpha = 255 обязательно)
                 resultBitmap.SetPixel(x, y, Color.FromArgb(255, noiseColor, noiseColor, noiseColor));
             }
 
@@ -700,108 +703,89 @@ namespace CV_Ultra
         // Показывает насколько сильно обработанное изображение отличается от исходного.
         private double CalculatePSNR(Bitmap original, Bitmap processed)
         {
-            // Проверяем совпадение размеров изображений
-            if (original.Width != processed.Width ||
-                original.Height != processed.Height)
+            if (original == null || processed == null)
+                throw new ArgumentException("Изображения не могут быть null");
+
+            if (original.Width != processed.Width || original.Height != processed.Height)
                 throw new Exception("Размеры изображений не совпадают");
 
-            // Среднеквадратичная ошибка (MSE)
-            double mse = 0;
+            long sumSq = 0;
+            int totalPixels = original.Width * original.Height;
 
-            // Проходим по всем пикселям изображения
-            for (int x = 0; x < original.Width; x++)
+            for (int y = 0; y < original.Height; y++)
             {
-                for (int y = 0; y < original.Height; y++)
+                for (int x = 0; x < original.Width; x++)
                 {
-                    // Получаем яркости пикселей
                     int p1 = original.GetPixel(x, y).R;
                     int p2 = processed.GetPixel(x, y).R;
-
-                    // Добавляем квадрат разности яркостей
-                    mse += Math.Pow(p1 - p2, 2);
+                    int diff = p1 - p2;
+                    sumSq += (long)diff * diff;
                 }
             }
 
-            // Находим среднее значение ошибки
-            mse /= (original.Width * original.Height);
+            double mse = (double)sumSq / totalPixels;
 
-            // Если изображения полностью совпадают
             if (mse == 0)
                 return double.PositiveInfinity;
 
-            // Вычисляем PSNR по стандартной формуле
-            double psnr = 10 * Math.Log10((255.0 * 255.0) / mse);
-
-            return psnr;
+            return 10 * Math.Log10((255.0 * 255.0) / mse);
         }
 
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
         // SSIM 
         private double CalculateSSIM(Bitmap img1, Bitmap img2)
         {
-            // Проверяем размеры изображений
-            if (img1.Width != img2.Width ||
-                img1.Height != img2.Height)
+            if (img1 == null || img2 == null)
+                throw new ArgumentException("Изображения не могут быть null");
+
+            if (img1.Width != img2.Width || img1.Height != img2.Height)
                 throw new Exception("Размеры изображений не совпадают");
 
-            int width = img1.Width;
-            int height = img1.Height;
+            int w = img1.Width;
+            int h = img1.Height;
+            int N = w * h;
 
-            // Общее количество пикселей
-            int N = width * height;
+            // Константы для численной стабильности
+            double C1 = (0.01 * 255) * (0.01 * 255);
+            double C2 = (0.03 * 255) * (0.03 * 255);
 
-            double meanX = 0;
-            double meanY = 0;
+            double sumX = 0, sumY = 0;
+            double sumXX = 0, sumYY = 0, sumXY = 0;
 
-            // Вычисляем средние яркости изображений
-
-            for (int x = 0; x < width; x++)
+            for (int y = 0; y < h; y++)
             {
-                for (int y = 0; y < height; y++)
+                for (int x = 0; x < w; x++)
                 {
-                    meanX += img1.GetPixel(x, y).R;
-                    meanY += img2.GetPixel(x, y).R;
+                    double v1 = img1.GetPixel(x, y).R;
+                    double v2 = img2.GetPixel(x, y).R;
+
+                    sumX += v1;
+                    sumY += v2;
+                    sumXX += v1 * v1;
+                    sumYY += v2 * v2;
+                    sumXY += v1 * v2;
                 }
             }
 
-            meanX /= N;
-            meanY /= N;
+            double meanX = sumX / N;
+            double meanY = sumY / N;
 
-            double varianceX = 0;
-            double varianceY = 0;
-            double covariance = 0;
+            double varX = (sumXX / N) - (meanX * meanX);
+            double varY = (sumYY / N) - (meanY * meanY);
+            double covXY = (sumXY / N) - (meanX * meanY);
 
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    double px = img1.GetPixel(x, y).R;
-                    double py = img2.GetPixel(x, y).R;
+            varX = Math.Max(varX, 0);
+            varY = Math.Max(varY, 0);
 
-                    varianceX += Math.Pow(px - meanX, 2);
-                    varianceY += Math.Pow(py - meanY, 2);
+            double numerator = (2 * meanX * meanY + C1) * (2 * covXY + C2);
+            double denominator = (meanX * meanX + meanY * meanY + C1) * (varX + varY + C2);
 
-                    covariance += (px - meanX) * (py - meanY);
-                }
-            }
-
-            varianceX /= (N - 1);
-            varianceY /= (N - 1);
-            covariance /= (N - 1);
-
-            double C1 = Math.Pow(0.01 * 255, 2);
-            double C2 = Math.Pow(0.03 * 255, 2);
-
-            double numerator =
-                (2 * meanX * meanY + C1) *
-                (2 * covariance + C2);
-
-            double denominator =
-                (meanX * meanX + meanY * meanY + C1) *
-                (varianceX + varianceY + C2);
+            if (denominator == 0)
+                return 0;
 
             return numerator / denominator;
         }
+
 
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
         // Смаз (Motion Blur)
@@ -1543,6 +1527,7 @@ namespace CV_Ultra
             panel3.Visible = !panel3.Visible;
             panel4.Visible = false;
             panel5.Visible = false;
+            panel6.Visible = false;
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -1570,6 +1555,8 @@ namespace CV_Ultra
             panel3.Visible = false;
             panel4.Visible = false;
             panel5.Visible = false;
+            panel6.Visible = !panel6.Visible;
+
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -1591,10 +1578,6 @@ namespace CV_Ultra
         {
             pictureBox1.BackgroundImage = ApplySaltAndPepperNoise(new Bitmap(pictureBox1.BackgroundImage), 50);
         }
-        private void button24_Click(object sender, EventArgs e)
-        {
-            pictureBox1.BackgroundImage = ApplyGaussianNoise(new Bitmap(pictureBox1.BackgroundImage), 50);
-        }
 
         private void button4_Click_1(object sender, EventArgs e)
         {
@@ -1609,6 +1592,7 @@ namespace CV_Ultra
                 // Загружаем выбранный файл в фоновое изображение
                 pictureBox1.BackgroundImage = new Bitmap(openDialog.FileName);
                 pictureBox2.BackgroundImage = new Bitmap(openDialog.FileName);
+
             }
         }
 
@@ -1699,12 +1683,22 @@ namespace CV_Ultra
 
         private void button34_Click(object sender, EventArgs e)
         {
-            pictureBox3.Visible = !pictureBox3.Visible;
             button35.Visible = !button35.Visible;
             button36.Visible = !button36.Visible;
             button37.Visible = !button37.Visible;
             button38.Visible = !button38.Visible;
+            pictureBox3.Visible = !pictureBox3.Visible;
+        }
 
+        private void button23_Click_1(object sender, EventArgs e)
+        {
+            this.button23.Click += new System.EventHandler(this.button23_Click);
+
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = ApplyGaussianNoise(new Bitmap(pictureBox1.BackgroundImage), 50);
         }
     }
 }

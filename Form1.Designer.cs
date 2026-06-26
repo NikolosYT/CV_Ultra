@@ -60,6 +60,9 @@
             button26 = new Button();
             button25 = new Button();
             panel3 = new Panel();
+            panel6 = new Panel();
+            button39 = new Button();
+            button40 = new Button();
             button24 = new Button();
             button23 = new Button();
             panel5 = new Panel();
@@ -80,6 +83,7 @@
             panel2.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
+            panel6.SuspendLayout();
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -590,6 +594,50 @@
             panel3.TabIndex = 14;
             panel3.Visible = false;
             // 
+            // panel6
+            // 
+            panel6.BackgroundImage = Properties.Resources.дваокна;
+            panel6.BackgroundImageLayout = ImageLayout.Stretch;
+            panel6.Controls.Add(button39);
+            panel6.Controls.Add(button40);
+            panel6.Location = new Point(328, 74);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(380, 162);
+            panel6.TabIndex = 26;
+            panel6.Visible = false;
+            // 
+            // button39
+            // 
+            button39.BackgroundImage = (Image)resources.GetObject("button39.BackgroundImage");
+            button39.BackgroundImageLayout = ImageLayout.Stretch;
+            button39.Cursor = Cursors.Hand;
+            button39.FlatAppearance.BorderSize = 0;
+            button39.FlatStyle = FlatStyle.Flat;
+            button39.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button39.ForeColor = Color.PaleVioletRed;
+            button39.Location = new Point(18, 87);
+            button39.Name = "button39";
+            button39.Size = new Size(328, 53);
+            button39.TabIndex = 25;
+            button39.Text = "SSIM";
+            button39.UseVisualStyleBackColor = true;
+            // 
+            // button40
+            // 
+            button40.BackgroundImage = (Image)resources.GetObject("button40.BackgroundImage");
+            button40.BackgroundImageLayout = ImageLayout.Stretch;
+            button40.Cursor = Cursors.Hand;
+            button40.FlatAppearance.BorderSize = 0;
+            button40.FlatStyle = FlatStyle.Flat;
+            button40.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
+            button40.ForeColor = Color.PaleVioletRed;
+            button40.Location = new Point(18, 28);
+            button40.Name = "button40";
+            button40.Size = new Size(328, 53);
+            button40.TabIndex = 24;
+            button40.Text = "PSNR";
+            button40.UseVisualStyleBackColor = true;
+            // 
             // button24
             // 
             button24.BackgroundImage = (Image)resources.GetObject("button24.BackgroundImage");
@@ -605,6 +653,7 @@
             button24.TabIndex = 25;
             button24.Text = "Гауссов шум";
             button24.UseVisualStyleBackColor = true;
+            button24.Click += button24_Click;
             // 
             // button23
             // 
@@ -621,6 +670,7 @@
             button23.TabIndex = 24;
             button23.Text = "Соль и перец";
             button23.UseVisualStyleBackColor = true;
+            button23.Click += button23_Click_1;
             // 
             // panel5
             // 
@@ -828,6 +878,8 @@
             BackgroundImage = Properties.Resources.заменатемнаяоснова;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1194, 636);
+            Controls.Add(panel6);
+            Controls.Add(panel3);
             Controls.Add(button38);
             Controls.Add(button37);
             Controls.Add(button36);
@@ -837,7 +889,6 @@
             Controls.Add(pictureBox2);
             Controls.Add(button29);
             Controls.Add(panel5);
-            Controls.Add(panel3);
             Controls.Add(panel4);
             Controls.Add(panel1);
             Controls.Add(panel2);
@@ -861,6 +912,7 @@
             panel2.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel3.ResumeLayout(false);
+            panel6.ResumeLayout(false);
             panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
@@ -915,5 +967,8 @@
         private Button button36;
         private Button button37;
         private Button button38;
+        private Panel panel6;
+        private Button button39;
+        private Button button40;
     }
 }
