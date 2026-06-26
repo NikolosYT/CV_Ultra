@@ -626,29 +626,22 @@ namespace CV_Ultra
         {
             int width = sourceBitmap.Width;
             int height = sourceBitmap.Height;
-
-            // Создаем новый холст с тем же форматом
             Bitmap resultBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-            // Копируем исходное изображение на холст
             using (Graphics g = Graphics.FromImage(resultBitmap))
             {
                 g.DrawImage(sourceBitmap, 0, 0, width, height);
             }
 
             long totalPixels = (long)width * height;
-            // Вычисляем количество пикселей для шума
-            long noisePixelsCount = (long)(totalPixels * percentage);
+            long noisePixelsCount = (long)(totalPixels * percentage); // percentage уже как доля, например 0.1
 
             for (long i = 0; i < noisePixelsCount; i++)
             {
                 int x = _random.Next(0, width);
                 int y = _random.Next(0, height);
 
-                // 0 = черный (перец), 255 = белый (соль)
                 int noiseColor = _random.Next(0, 2) == 0 ? 0 : 255;
-
-                // Устанавливаем цвет пикселя
                 resultBitmap.SetPixel(x, y, Color.FromArgb(255, noiseColor, noiseColor, noiseColor));
             }
 
@@ -1604,20 +1597,21 @@ namespace CV_Ultra
                 return;
             }
 
-            // 2. Создаем копию изображения
+            // 2. Создаем копию изображения, чтобы не портить оригинал в памяти
+            // Важно: создаем Bitmap из Image, а не просто копируем ссылку
             Bitmap sourceImage = new Bitmap(pictureBox1.BackgroundImage);
 
-            // 3. Применяем шум. 
-            // ВАЖНО: 5% = 0.05. В твоем методе ожидается доля (0.0 - 1.0), а не проценты (0 - 100).
-            // Если хочешь 10%, пиши 0.1. Если 1%, пиши 0.01.
-            Bitmap noisyImage = ApplySaltAndPepperNoise(sourceImage, 0.05);
+            // 3. Применяем шум (50% — это очень много, для теста сойдет, но можно поставить 5 или 10)
+            Bitmap noisyImage = ApplySaltAndPepperNoise(sourceImage, 50);
 
-            // 4. Освобождаем память
+            // 4. Освобождаем старую картинку из памяти (чтобы не было утечек)
             sourceImage.Dispose();
 
             // 5. Выводим результат
             pictureBox1.BackgroundImage = noisyImage;
-            pictureBox1.Invalidate(); // Обновляем отображение
+
+            // Опционально: можно обновить pictureBox, если он не обновился сам
+            pictureBox1.Invalidate();
         }
         private void button24_Click(object sender, EventArgs e)
         {
@@ -1727,11 +1721,11 @@ namespace CV_Ultra
 
         private void button34_Click(object sender, EventArgs e)
         {
+            pictureBox3.Visible = !pictureBox3.Visible;
             button35.Visible = !button35.Visible;
             button36.Visible = !button36.Visible;
             button37.Visible = !button37.Visible;
             button38.Visible = !button38.Visible;
-            pictureBox3.Visible = !pictureBox3.Visible;
 
         }
     }
