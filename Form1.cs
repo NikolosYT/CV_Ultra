@@ -2,8 +2,7 @@ namespace CV_Ultra
 {
     public partial class Form1 : Form
     {
-        private readonly Random _random = new Random();
-        private Bitmap originalBitmap;
+        private Bitmap originalBitmap; //вот это добавила
         public Form1()
         {
             InitializeComponent();
@@ -620,28 +619,37 @@ namespace CV_Ultra
 
             return resultBitmap;
         }
-
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
         // Шум "Соль и перец"
         public Bitmap ApplySaltAndPepperNoise(Bitmap sourceBitmap, double percentage)
         {
             int width = sourceBitmap.Width;
             int height = sourceBitmap.Height;
+
+            // ГАРАНТИЯ РАБОТЫ: Создаем холст в стандартном 32-битном формате, где SetPixel разрешен
             Bitmap resultBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
+            // Честно копируем графику оригинала на новый холст
             using (Graphics g = Graphics.FromImage(resultBitmap))
             {
                 g.DrawImage(sourceBitmap, 0, 0, width, height);
             }
 
-            long totalPixels = (long)width * height;
-            long noisePixelsCount = (long)(totalPixels * percentage); // percentage уже как доля, например 0.1
+            Random rand = new Random();
+            int totalPixels = width * height;
 
-            for (long i = 0; i < noisePixelsCount; i++)
+            // Внимание: percentage передавать как целое число (например, 10 для 10%)
+            int noisePixelsCount = (int)(totalPixels * (percentage / 100.0));
+
+            for (int i = 0; i < noisePixelsCount; i++)
             {
-                int x = _random.Next(0, width);
-                int y = _random.Next(0, height);
+                int x = rand.Next(0, width);
+                int y = rand.Next(0, height);
 
-                int noiseColor = _random.Next(0, 2) == 0 ? 0 : 255;
+                // 0 - черный (перец), 255 - белый (соль)
+                int noiseColor = rand.Next(0, 2) == 0 ? 0 : 255;
+
+                // Явно передаем Alpha = 255, чтобы пиксель не стал прозрачным
                 resultBitmap.SetPixel(x, y, Color.FromArgb(255, noiseColor, noiseColor, noiseColor));
             }
 
@@ -1377,17 +1385,8 @@ namespace CV_Ultra
         }
         private void button4_Click(object sender, EventArgs e) //вставить изображение в picktureBox1
         {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-            {
-                ofd.Filter = "Images|*.jpg;*.jpeg;*.png;*.bmp";
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    originalBitmap = new Bitmap(ofd.FileName);
-                    pictureBox1.Image = originalBitmap; 
-                }
-            }
-        }
 
+        }
 
         private void button3_Click(object sender, EventArgs e) // светлая тема
         {
@@ -1590,28 +1589,7 @@ namespace CV_Ultra
         }
         private void button23_Click(object sender, EventArgs e)
         {
-            // 1. Проверяем, есть ли картинка в pictureBox1
-            if (pictureBox1.BackgroundImage == null)
-            {
-                MessageBox.Show("Сначала загрузите изображение!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // 2. Создаем копию изображения, чтобы не портить оригинал в памяти
-            // Важно: создаем Bitmap из Image, а не просто копируем ссылку
-            Bitmap sourceImage = new Bitmap(pictureBox1.BackgroundImage);
-
-            // 3. Применяем шум (50% — это очень много, для теста сойдет, но можно поставить 5 или 10)
-            Bitmap noisyImage = ApplySaltAndPepperNoise(sourceImage, 50);
-
-            // 4. Освобождаем старую картинку из памяти (чтобы не было утечек)
-            sourceImage.Dispose();
-
-            // 5. Выводим результат
-            pictureBox1.BackgroundImage = noisyImage;
-
-            // Опционально: можно обновить pictureBox, если он не обновился сам
-            pictureBox1.Invalidate();
+            pictureBox1.BackgroundImage = ApplySaltAndPepperNoise(new Bitmap(pictureBox1.BackgroundImage), 50);
         }
         private void button24_Click(object sender, EventArgs e)
         {
