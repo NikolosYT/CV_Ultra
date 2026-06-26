@@ -1700,5 +1700,67 @@ namespace CV_Ultra
         {
             pictureBox1.BackgroundImage = ApplyGaussianNoise(new Bitmap(pictureBox1.BackgroundImage), 50);
         }
+
+        private void button40_Click(object sender, EventArgs e)
+        {
+            // Проверка: есть ли картинки?
+            if (pictureBox1.Image == null || pictureBox2.Image == null)
+            {
+                MessageBox.Show("Загрузите оба изображения (оригинал и обработанное)!");
+                return;
+            }
+
+            try
+            {
+                using (Bitmap original = new Bitmap(pictureBox2.Image))
+                using (Bitmap current = new Bitmap(pictureBox1.Image))
+                {
+                    double psnr = CalculatePSNR(original, current);
+
+                    string resultText;
+                    if (double.IsPositiveInfinity(psnr))
+                    {
+                        resultText = "PSNR: много много (Изображения идентичны)";
+                    }
+                    else
+                    {
+                        resultText = $"PSNR: {psnr:F2} дБ";
+                    }
+
+                    // Вывод в label1
+                    label1.Text = resultText;
+                }
+            }
+            catch (Exception ex)
+            {
+                label1.Text = "Ошибка PSNR: " + ex.Message;
+            }
+        }
+
+        private void button39_Click(object sender, EventArgs e)
+        {
+            // Проверка: есть ли картинки?
+            if (pictureBox1.Image == null || pictureBox2.Image == null)
+            {
+                MessageBox.Show("Загрузите оба изображения (оригинал и обработанное)!");
+                return;
+            }
+
+            try
+            {
+                using (Bitmap original = new Bitmap(pictureBox2.Image))
+                using (Bitmap current = new Bitmap(pictureBox1.Image))
+                {
+                    double ssim = CalculateSSIM(original, current);
+
+                    // Вывод в label2
+                    label2.Text = $"SSIM: {ssim:F4}";
+                }
+            }
+            catch (Exception ex)
+            {
+                label2.Text = "Ошибка SSIM: " + ex.Message;
+            }
+        }
     }
 }
