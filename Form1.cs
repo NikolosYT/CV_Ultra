@@ -7,6 +7,8 @@ namespace CV_Ultra
         public Form1()
         {
             InitializeComponent();
+            label1.Visible = false;
+            label2.Visible = false;
             pictureBox2.Visible = false;
             pictureBox3.Visible = false;
             button35.Visible = false;
@@ -665,7 +667,6 @@ namespace CV_Ultra
             int width = sourceBitmap.Width;
             int height = sourceBitmap.Height;
 
-            // Точно так же создаем независимый открытый холст
             Bitmap resultBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
             Random rand = new Random();
@@ -700,7 +701,7 @@ namespace CV_Ultra
         }
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
         // PSNR 
-        // Показывает насколько сильно обработанное изображение отличается от исходного.
+
         private double CalculatePSNR(Bitmap original, Bitmap processed)
         {
             if (original == null || processed == null)
@@ -736,7 +737,7 @@ namespace CV_Ultra
         private double CalculateSSIM(Bitmap img1, Bitmap img2)
         {
             if (img1 == null || img2 == null)
-                throw new ArgumentException("Изображения не могут быть null");
+                throw new ArgumentException("Изображения null нельзя");
 
             if (img1.Width != img2.Width || img1.Height != img2.Height)
                 throw new Exception("Размеры изображений не совпадают");
@@ -1492,8 +1493,12 @@ namespace CV_Ultra
             panel3.Visible = false;
             panel4.Visible = false;
             panel5.Visible = false;
-            //pictureBox2.Visible = true;
+            panel6.Visible = false;
+
             pictureBox1.BackgroundImage = pictureBox2.BackgroundImage;
+
+            label1.Visible = false;
+            label2.Visible = false;
 
         }
 
@@ -1504,6 +1509,10 @@ namespace CV_Ultra
             panel3.Visible = false;
             panel4.Visible = false;
             panel5.Visible = false;
+            panel6.Visible = false;
+
+            label1.Visible = false;
+            label2.Visible = false;
         }
 
         private void panel4_Paint(object sender, PaintEventArgs e)
@@ -1518,6 +1527,10 @@ namespace CV_Ultra
             panel3.Visible = false;
             panel4.Visible = false;
             panel5.Visible = false;
+            panel6.Visible = false;
+
+            label1.Visible = false;
+            label2.Visible = false;
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -1528,6 +1541,9 @@ namespace CV_Ultra
             panel4.Visible = false;
             panel5.Visible = false;
             panel6.Visible = false;
+
+            label1.Visible = false;
+            label2.Visible = false;
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -1537,6 +1553,10 @@ namespace CV_Ultra
             panel3.Visible = false;
             panel4.Visible = !panel4.Visible;
             panel5.Visible = false;
+            panel6.Visible = false;
+
+            label1.Visible = false;
+            label2.Visible = false;
         }
 
         private void button11_Click(object sender, EventArgs e)
@@ -1546,6 +1566,10 @@ namespace CV_Ultra
             panel3.Visible = false;
             panel4.Visible = false;
             panel5.Visible = !panel5.Visible;
+            panel6.Visible = false;
+
+            label1.Visible = false;
+            label2.Visible = false;
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -1557,6 +1581,9 @@ namespace CV_Ultra
             panel5.Visible = false;
             panel6.Visible = !panel6.Visible;
 
+            label1.Visible = false;
+            label2.Visible = false;
+
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -1566,6 +1593,10 @@ namespace CV_Ultra
             panel3.Visible = false;
             panel4.Visible = false;
             panel5.Visible = false;
+            panel6.Visible = false;
+
+            label1.Visible = false;
+            label2.Visible = false;
 
             pictureBox1.BackgroundImage = ApplyMotionBlur(new Bitmap(pictureBox1.BackgroundImage), 15);
         }
@@ -1703,64 +1734,55 @@ namespace CV_Ultra
 
         private void button40_Click(object sender, EventArgs e)
         {
-            // Проверка: есть ли картинки?
-            if (pictureBox1.Image == null || pictureBox2.Image == null)
+            label1.Visible = true;
+            if (pictureBox1.BackgroundImage == null ||
+                pictureBox2.BackgroundImage == null)
             {
-                MessageBox.Show("Загрузите оба изображения (оригинал и обработанное)!");
+                MessageBox.Show("нема изображения");
                 return;
             }
 
-            try
+            Bitmap img1 = new Bitmap(pictureBox1.BackgroundImage);
+            Bitmap img2 = new Bitmap(pictureBox2.BackgroundImage);
+
+            double result = CalculatePSNR(img1, img2);
+
+            if (double.IsInfinity(result))
             {
-                using (Bitmap original = new Bitmap(pictureBox2.Image))
-                using (Bitmap current = new Bitmap(pictureBox1.Image))
-                {
-                    double psnr = CalculatePSNR(original, current);
-
-                    string resultText;
-                    if (double.IsPositiveInfinity(psnr))
-                    {
-                        resultText = "PSNR: много много (Изображения идентичны)";
-                    }
-                    else
-                    {
-                        resultText = $"PSNR: {psnr:F2} дБ";
-                    }
-
-                    // Вывод в label1
-                    label1.Text = resultText;
-                }
+                label1.Text = "Оч похожи";
             }
-            catch (Exception ex)
+            else
             {
-                label1.Text = "Ошибка PSNR: " + ex.Message;
+                label1.Text = "PSNR: " + result.ToString("F2") + " дб";
             }
         }
 
         private void button39_Click(object sender, EventArgs e)
         {
-            // Проверка: есть ли картинки?
-            if (pictureBox1.Image == null || pictureBox2.Image == null)
+            label2.Visible = true;
+            if (pictureBox1.BackgroundImage == null ||
+                pictureBox2.BackgroundImage == null)
             {
-                MessageBox.Show("Загрузите оба изображения (оригинал и обработанное)!");
+                MessageBox.Show("нема изображения");
                 return;
             }
 
-            try
-            {
-                using (Bitmap original = new Bitmap(pictureBox2.Image))
-                using (Bitmap current = new Bitmap(pictureBox1.Image))
-                {
-                    double ssim = CalculateSSIM(original, current);
+            Bitmap img1 = new Bitmap(pictureBox1.BackgroundImage);
+            Bitmap img2 = new Bitmap(pictureBox2.BackgroundImage);
 
-                    // Вывод в label2
-                    label2.Text = $"SSIM: {ssim:F4}";
-                }
-            }
-            catch (Exception ex)
-            {
-                label2.Text = "Ошибка SSIM: " + ex.Message;
-            }
+            double result = CalculateSSIM(img1, img2);
+
+            label2.Text = "SSIM: " + result.ToString("F4");
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

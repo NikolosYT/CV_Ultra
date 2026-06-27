@@ -878,20 +878,29 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(797, 532);
+            label1.BackColor = Color.White;
+            label1.Font = new Font("Times New Roman", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label1.ForeColor = Color.PaleVioletRed;
+            label1.Image = Properties.Resources.черное;
+            label1.Location = new Point(798, 534);
             label1.Name = "label1";
-            label1.Size = new Size(36, 15);
+            label1.Size = new Size(61, 22);
             label1.TabIndex = 29;
             label1.Text = "PSNR";
+            label1.Click += label1_Click;
             // 
             // label2
             // 
             label2.AutoSize = true;
+            label2.Font = new Font("Times New Roman", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label2.ForeColor = Color.PaleVioletRed;
+            label2.Image = Properties.Resources.черное;
             label2.Location = new Point(798, 568);
             label2.Name = "label2";
-            label2.Size = new Size(38, 15);
+            label2.Size = new Size(57, 22);
             label2.TabIndex = 30;
-            label2.Text = "label2";
+            label2.Text = "SSIM";
+            label2.Click += label2_Click;
             // 
             // Form1
             // 
