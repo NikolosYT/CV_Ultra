@@ -542,6 +542,7 @@
             // 
             // pictureBox4
             // 
+            pictureBox4.BackgroundImage = Properties.Resources.rgb;
             pictureBox4.BackgroundImageLayout = ImageLayout.Stretch;
             pictureBox4.Location = new Point(37, 406);
             pictureBox4.Name = "pictureBox4";
