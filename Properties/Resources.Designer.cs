@@ -213,6 +213,16 @@ namespace CV_Ultra.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap крестик {
+            get {
+                object obj = ResourceManager.GetObject("крестик", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap лунасвет {
             get {
                 object obj = ResourceManager.GetObject("лунасвет", resourceCulture);

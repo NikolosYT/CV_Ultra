@@ -42,10 +42,12 @@
             button10 = new Button();
             button11 = new Button();
             panel1 = new Panel();
+            button46 = new Button();
             button14 = new Button();
             button12 = new Button();
             button13 = new Button();
             panel2 = new Panel();
+            button45 = new Button();
             button19 = new Button();
             button20 = new Button();
             button21 = new Button();
@@ -55,17 +57,21 @@
             button16 = new Button();
             button15 = new Button();
             panel4 = new Panel();
+            button44 = new Button();
             button28 = new Button();
             button27 = new Button();
             button26 = new Button();
             button25 = new Button();
             panel3 = new Panel();
+            button42 = new Button();
             button24 = new Button();
             button23 = new Button();
             panel6 = new Panel();
+            button41 = new Button();
             button39 = new Button();
             button40 = new Button();
             panel5 = new Panel();
+            button43 = new Button();
             button33 = new Button();
             button32 = new Button();
             button31 = new Button();
@@ -80,6 +86,7 @@
             button38 = new Button();
             label1 = new Label();
             label2 = new Label();
+            button47 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -287,6 +294,7 @@
             // 
             panel1.BackgroundImage = Properties.Resources.преобораз;
             panel1.BackgroundImageLayout = ImageLayout.Stretch;
+            panel1.Controls.Add(button46);
             panel1.Controls.Add(button14);
             panel1.Controls.Add(button12);
             panel1.Controls.Add(button13);
@@ -295,6 +303,20 @@
             panel1.Size = new Size(377, 229);
             panel1.TabIndex = 12;
             panel1.Visible = false;
+            // 
+            // button46
+            // 
+            button46.BackgroundImage = Properties.Resources.крестик;
+            button46.BackgroundImageLayout = ImageLayout.Stretch;
+            button46.Cursor = Cursors.Hand;
+            button46.FlatAppearance.BorderSize = 0;
+            button46.FlatStyle = FlatStyle.Flat;
+            button46.Location = new Point(352, 4);
+            button46.Name = "button46";
+            button46.Size = new Size(21, 21);
+            button46.TabIndex = 31;
+            button46.UseVisualStyleBackColor = true;
+            button46.Click += button46_Click;
             // 
             // button14
             // 
@@ -351,6 +373,7 @@
             // 
             panel2.BackgroundImage = Properties.Resources.пустоеокно;
             panel2.BackgroundImageLayout = ImageLayout.Stretch;
+            panel2.Controls.Add(button45);
             panel2.Controls.Add(button19);
             panel2.Controls.Add(button20);
             panel2.Controls.Add(button21);
@@ -364,6 +387,20 @@
             panel2.Size = new Size(377, 543);
             panel2.TabIndex = 13;
             panel2.Visible = false;
+            // 
+            // button45
+            // 
+            button45.BackgroundImage = Properties.Resources.крестик;
+            button45.BackgroundImageLayout = ImageLayout.Stretch;
+            button45.Cursor = Cursors.Hand;
+            button45.FlatAppearance.BorderSize = 0;
+            button45.FlatStyle = FlatStyle.Flat;
+            button45.Location = new Point(351, 3);
+            button45.Name = "button45";
+            button45.Size = new Size(21, 21);
+            button45.TabIndex = 31;
+            button45.UseVisualStyleBackColor = true;
+            button45.Click += button45_Click;
             // 
             // button19
             // 
@@ -505,16 +542,31 @@
             // 
             panel4.BackgroundImage = Properties.Resources.четвокна;
             panel4.BackgroundImageLayout = ImageLayout.Stretch;
+            panel4.Controls.Add(button44);
             panel4.Controls.Add(button28);
             panel4.Controls.Add(button27);
             panel4.Controls.Add(button26);
             panel4.Controls.Add(button25);
-            panel4.Location = new Point(341, 71);
+            panel4.Location = new Point(324, 86);
             panel4.Name = "panel4";
             panel4.Size = new Size(380, 277);
             panel4.TabIndex = 15;
             panel4.Visible = false;
             panel4.Paint += panel4_Paint;
+            // 
+            // button44
+            // 
+            button44.BackgroundImage = Properties.Resources.крестик;
+            button44.BackgroundImageLayout = ImageLayout.Stretch;
+            button44.Cursor = Cursors.Hand;
+            button44.FlatAppearance.BorderSize = 0;
+            button44.FlatStyle = FlatStyle.Flat;
+            button44.Location = new Point(352, 4);
+            button44.Name = "button44";
+            button44.Size = new Size(21, 21);
+            button44.TabIndex = 30;
+            button44.UseVisualStyleBackColor = true;
+            button44.Click += button44_Click;
             // 
             // button28
             // 
@@ -588,13 +640,28 @@
             // 
             panel3.BackgroundImage = Properties.Resources.дваокна;
             panel3.BackgroundImageLayout = ImageLayout.Stretch;
+            panel3.Controls.Add(button42);
             panel3.Controls.Add(button24);
             panel3.Controls.Add(button23);
-            panel3.Location = new Point(338, 71);
+            panel3.Location = new Point(321, 105);
             panel3.Name = "panel3";
             panel3.Size = new Size(380, 162);
             panel3.TabIndex = 14;
             panel3.Visible = false;
+            // 
+            // button42
+            // 
+            button42.BackgroundImage = Properties.Resources.крестик;
+            button42.BackgroundImageLayout = ImageLayout.Stretch;
+            button42.Cursor = Cursors.Hand;
+            button42.FlatAppearance.BorderSize = 0;
+            button42.FlatStyle = FlatStyle.Flat;
+            button42.Location = new Point(353, 4);
+            button42.Name = "button42";
+            button42.Size = new Size(21, 21);
+            button42.TabIndex = 27;
+            button42.UseVisualStyleBackColor = true;
+            button42.Click += button42_Click;
             // 
             // button24
             // 
@@ -634,13 +701,28 @@
             // 
             panel6.BackgroundImage = Properties.Resources.дваокна;
             panel6.BackgroundImageLayout = ImageLayout.Stretch;
+            panel6.Controls.Add(button41);
             panel6.Controls.Add(button39);
             panel6.Controls.Add(button40);
-            panel6.Location = new Point(328, 74);
+            panel6.Location = new Point(328, 73);
             panel6.Name = "panel6";
             panel6.Size = new Size(380, 162);
             panel6.TabIndex = 26;
             panel6.Visible = false;
+            // 
+            // button41
+            // 
+            button41.BackgroundImage = Properties.Resources.крестик;
+            button41.BackgroundImageLayout = ImageLayout.Stretch;
+            button41.Cursor = Cursors.Hand;
+            button41.FlatAppearance.BorderSize = 0;
+            button41.FlatStyle = FlatStyle.Flat;
+            button41.Location = new Point(354, 3);
+            button41.Name = "button41";
+            button41.Size = new Size(21, 21);
+            button41.TabIndex = 26;
+            button41.UseVisualStyleBackColor = true;
+            button41.Click += button41_Click;
             // 
             // button39
             // 
@@ -680,16 +762,31 @@
             // 
             panel5.BackgroundImage = Properties.Resources.четвокна;
             panel5.BackgroundImageLayout = ImageLayout.Stretch;
+            panel5.Controls.Add(button43);
             panel5.Controls.Add(button33);
             panel5.Controls.Add(button32);
             panel5.Controls.Add(button31);
             panel5.Controls.Add(button30);
-            panel5.Location = new Point(335, 71);
+            panel5.Location = new Point(331, 99);
             panel5.Name = "panel5";
             panel5.Size = new Size(377, 283);
             panel5.TabIndex = 16;
             panel5.Visible = false;
             panel5.Paint += panel5_Paint;
+            // 
+            // button43
+            // 
+            button43.BackgroundImage = Properties.Resources.крестик;
+            button43.BackgroundImageLayout = ImageLayout.Stretch;
+            button43.Cursor = Cursors.Hand;
+            button43.FlatAppearance.BorderSize = 0;
+            button43.FlatStyle = FlatStyle.Flat;
+            button43.Location = new Point(352, 3);
+            button43.Name = "button43";
+            button43.Size = new Size(21, 21);
+            button43.TabIndex = 28;
+            button43.UseVisualStyleBackColor = true;
+            button43.Click += button43_Click;
             // 
             // button33
             // 
@@ -795,9 +892,9 @@
             button34.FlatStyle = FlatStyle.Flat;
             button34.Font = new Font("Times New Roman", 20.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
             button34.ForeColor = Color.PaleVioletRed;
-            button34.Location = new Point(1086, 3);
+            button34.Location = new Point(1098, 3);
             button34.Name = "button34";
-            button34.Size = new Size(96, 49);
+            button34.Size = new Size(84, 49);
             button34.TabIndex = 19;
             button34.UseVisualStyleBackColor = true;
             button34.Click += button34_Click;
@@ -902,6 +999,20 @@
             label2.Text = "SSIM";
             label2.Click += label2_Click;
             // 
+            // button47
+            // 
+            button47.BackgroundImage = Properties.Resources.крестик;
+            button47.BackgroundImageLayout = ImageLayout.Stretch;
+            button47.Cursor = Cursors.Hand;
+            button47.FlatAppearance.BorderSize = 0;
+            button47.FlatStyle = FlatStyle.Flat;
+            button47.Location = new Point(1113, 63);
+            button47.Name = "button47";
+            button47.Size = new Size(21, 21);
+            button47.TabIndex = 32;
+            button47.UseVisualStyleBackColor = true;
+            button47.Click += button47_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -909,10 +1020,9 @@
             BackgroundImage = Properties.Resources.заменатемнаяоснова;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1194, 636);
+            Controls.Add(button47);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(panel6);
-            Controls.Add(panel3);
             Controls.Add(button38);
             Controls.Add(button37);
             Controls.Add(button36);
@@ -921,10 +1031,6 @@
             Controls.Add(button34);
             Controls.Add(pictureBox2);
             Controls.Add(button29);
-            Controls.Add(panel5);
-            Controls.Add(panel4);
-            Controls.Add(panel1);
-            Controls.Add(panel2);
             Controls.Add(button11);
             Controls.Add(button10);
             Controls.Add(button9);
@@ -935,8 +1041,14 @@
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(button2);
-            Controls.Add(pictureBox1);
             Controls.Add(button1);
+            Controls.Add(pictureBox1);
+            Controls.Add(panel1);
+            Controls.Add(panel4);
+            Controls.Add(panel2);
+            Controls.Add(panel3);
+            Controls.Add(panel6);
+            Controls.Add(panel5);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
@@ -1006,5 +1118,12 @@
         private Button button40;
         private Label label1;
         private Label label2;
+        private Button button41;
+        private Button button42;
+        private Button button43;
+        private Button button44;
+        private Button button45;
+        private Button button46;
+        private Button button47;
     }
 }

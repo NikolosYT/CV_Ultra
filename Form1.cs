@@ -15,6 +15,7 @@ namespace CV_Ultra
             button36.Visible = false;
             button37.Visible = false;
             button38.Visible = false;
+            button47.Visible = false;
         }
 
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1718,6 +1719,7 @@ namespace CV_Ultra
             button36.Visible = !button36.Visible;
             button37.Visible = !button37.Visible;
             button38.Visible = !button38.Visible;
+            button47.Visible = !button47.Visible;
             pictureBox3.Visible = !pictureBox3.Visible;
         }
 
@@ -1783,6 +1785,49 @@ namespace CV_Ultra
         private void label2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button41_Click(object sender, EventArgs e)
+        {
+            panel6.Visible = false;  //PSNR è SSIM
+            label1.Visible = false;
+            label2.Visible = false;
+
+        }
+
+        private void button42_Click(object sender, EventArgs e)
+        {
+            panel3.Visible = false;
+        }
+
+        private void button43_Click(object sender, EventArgs e)
+        {
+            panel5.Visible = false;
+        }
+
+        private void button44_Click(object sender, EventArgs e)
+        {
+            panel4.Visible = false;
+        }
+
+        private void button45_Click(object sender, EventArgs e)
+        {
+            panel2.Visible = false;
+        }
+
+        private void button46_Click(object sender, EventArgs e)
+        {
+            panel1.Visible = false;
+        }
+
+        private void button47_Click(object sender, EventArgs e)
+        {
+            button35.Visible = false;
+            button36.Visible = false;
+            button37.Visible = false;
+            button38.Visible = false;
+            button47.Visible = false;
+            pictureBox3.Visible = false;
         }
     }
 }

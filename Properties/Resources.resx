@@ -124,6 +124,9 @@
   <data name="дваокна" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\дваокна.JPG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="настройки_свет" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\настройки_свет.JPG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="аккаунт_темный" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\аккаунт_темный.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -220,7 +223,7 @@
   <data name="кнопкасветкрасиво" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\кнопкасветкрасиво.JPG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="настройки_свет" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\настройки_свет.JPG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="крестик" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\крестик.JPG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
