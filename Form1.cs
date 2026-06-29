@@ -1747,21 +1747,19 @@ namespace CV_Ultra
         private void button40_Click(object sender, EventArgs e)
         {
             label1.Visible = true;
-            if (pictureBox1.BackgroundImage == null ||
-                pictureBox2.BackgroundImage == null)
+            if (pictureBox4.BackgroundImage == null)
             {
                 MessageBox.Show("нема изображени€");
                 return;
             }
-
             Bitmap img1 = new Bitmap(pictureBox1.BackgroundImage);
-            Bitmap img2 = new Bitmap(pictureBox2.BackgroundImage);
+            Bitmap img2 = new Bitmap(pictureBox4.BackgroundImage);
 
             double result = CalculatePSNR(img1, img2);
 
             if (double.IsInfinity(result))
             {
-                label1.Text = "ќч похожи";
+                label1.Text = "“акого числа не существует... (оч похоже)";
             }
             else
             {
@@ -1772,15 +1770,14 @@ namespace CV_Ultra
         private void button39_Click(object sender, EventArgs e)
         {
             label2.Visible = true;
-            if (pictureBox1.BackgroundImage == null ||
-                pictureBox2.BackgroundImage == null)
+            if (pictureBox4.BackgroundImage == null)
             {
                 MessageBox.Show("нема изображени€");
                 return;
             }
 
             Bitmap img1 = new Bitmap(pictureBox1.BackgroundImage);
-            Bitmap img2 = new Bitmap(pictureBox2.BackgroundImage);
+            Bitmap img2 = new Bitmap(pictureBox4.BackgroundImage);
 
             double result = CalculateSSIM(img1, img2);
 
