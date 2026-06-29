@@ -826,11 +826,7 @@ namespace CV_Ultra
                     int gray = sum / count;
 
                     // Записываем результат
-                    result.SetPixel(
-                        x,
-                        y,
-                        Color.FromArgb(gray, gray, gray)
-                    );
+                    result.SetPixel(x, y, Color.FromArgb(gray, gray, gray));
                 }
             }
 
@@ -1367,7 +1363,21 @@ namespace CV_Ultra
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
         private void button1_Click(object sender, EventArgs e)
         {
-
+            if (button1.Text == "Сохранить")
+            {
+                button1.Text = "Сравнить";
+                pictureBox4.BackgroundImage = pictureBox1.BackgroundImage;
+            }
+            else if (button1.Text == "Сравнить")
+            {
+                button1.Text = "Закрыть";
+                pictureBox4.Visible = true;
+            }
+            else if (button1.Text == "Закрыть")
+            {
+                button1.Text = "Сохранить";
+                pictureBox4.Visible = false;
+            }
         }
         private void button4_Click(object sender, EventArgs e) //вставить изображение в picktureBox1
         {

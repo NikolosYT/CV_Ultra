@@ -56,6 +56,7 @@
             button18 = new Button();
             button16 = new Button();
             button15 = new Button();
+            pictureBox4 = new PictureBox();
             panel4 = new Panel();
             button44 = new Button();
             button28 = new Button();
@@ -90,6 +91,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
             panel6.SuspendLayout();
@@ -111,7 +113,7 @@
             button1.Name = "button1";
             button1.Size = new Size(132, 30);
             button1.TabIndex = 0;
-            button1.Text = "Вывод";
+            button1.Text = "Сохранить";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
@@ -537,6 +539,16 @@
             button15.Text = "Сглаживание (у. ф.)";
             button15.UseVisualStyleBackColor = true;
             button15.Click += button15_Click;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBox4.Location = new Point(37, 406);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(252, 225);
+            pictureBox4.TabIndex = 33;
+            pictureBox4.TabStop = false;
+            pictureBox4.Visible = false;
             // 
             // panel4
             // 
@@ -1029,6 +1041,7 @@
             Controls.Add(button35);
             Controls.Add(pictureBox3);
             Controls.Add(button34);
+            Controls.Add(pictureBox4);
             Controls.Add(pictureBox2);
             Controls.Add(button29);
             Controls.Add(button11);
@@ -1055,6 +1068,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             panel4.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel6.ResumeLayout(false);
@@ -1125,5 +1139,6 @@
         private Button button45;
         private Button button46;
         private Button button47;
+        private PictureBox pictureBox4;
     }
 }
